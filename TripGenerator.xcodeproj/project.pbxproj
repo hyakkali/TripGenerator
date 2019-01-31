@@ -8,22 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		233C151E2202864700AA4322 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233C151D2202864700AA4322 /* AppDelegate.swift */; };
-		233C15202202864700AA4322 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233C151F2202864700AA4322 /* ViewController.swift */; };
+		233C15202202864700AA4322 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233C151F2202864700AA4322 /* MainViewController.swift */; };
 		233C15232202864700AA4322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 233C15212202864700AA4322 /* Main.storyboard */; };
 		233C15262202864700AA4322 /* TripGenerator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */; };
 		233C15282202864900AA4322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 233C15272202864900AA4322 /* Assets.xcassets */; };
 		233C152B2202864900AA4322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 233C15292202864900AA4322 /* LaunchScreen.storyboard */; };
+		23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC64CD2203636500207CB1 /* TripViewController.swift */; };
+		6AB66D2C8734377AD4D6B61B /* Pods_TripGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		233C151A2202864700AA4322 /* TripGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		233C151D2202864700AA4322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		233C151F2202864700AA4322 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		233C151F2202864700AA4322 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		233C15222202864700AA4322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		233C15252202864700AA4322 /* TripGenerator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TripGenerator.xcdatamodel; sourceTree = "<group>"; };
 		233C15272202864900AA4322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		233C152A2202864900AA4322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		233C152C2202864900AA4322 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		23CC64CD2203636500207CB1 /* TripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
+		23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		770078469DB390612866E83C /* Pods-TripGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripGenerator.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator.release.xcconfig"; sourceTree = "<group>"; };
+		CF524223622A857D68C22B81 /* Pods-TripGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripGenerator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AB66D2C8734377AD4D6B61B /* Pods_TripGenerator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +49,8 @@
 			children = (
 				233C151C2202864700AA4322 /* TripGenerator */,
 				233C151B2202864700AA4322 /* Products */,
+				69707403C23C1CDA0C7F3C12 /* Pods */,
+				295429E2D1F3D7204D4552B7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,14 +66,48 @@
 			isa = PBXGroup;
 			children = (
 				233C151D2202864700AA4322 /* AppDelegate.swift */,
-				233C151F2202864700AA4322 /* ViewController.swift */,
-				233C15212202864700AA4322 /* Main.storyboard */,
+				23CC64CF22036B8800207CB1 /* Controller */,
+				23AFAB9C220386F4001A50A5 /* View */,
 				233C15272202864900AA4322 /* Assets.xcassets */,
-				233C15292202864900AA4322 /* LaunchScreen.storyboard */,
 				233C152C2202864900AA4322 /* Info.plist */,
 				233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */,
 			);
 			path = TripGenerator;
+			sourceTree = "<group>";
+		};
+		23AFAB9C220386F4001A50A5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				233C15212202864700AA4322 /* Main.storyboard */,
+				233C15292202864900AA4322 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		23CC64CF22036B8800207CB1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				233C151F2202864700AA4322 /* MainViewController.swift */,
+				23CC64CD2203636500207CB1 /* TripViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		295429E2D1F3D7204D4552B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		69707403C23C1CDA0C7F3C12 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CF524223622A857D68C22B81 /* Pods-TripGenerator.debug.xcconfig */,
+				770078469DB390612866E83C /* Pods-TripGenerator.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +117,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 233C152F2202864900AA4322 /* Build configuration list for PBXNativeTarget "TripGenerator" */;
 			buildPhases = (
+				17F08D85AF25A02A1DB720CB /* [CP] Check Pods Manifest.lock */,
 				233C15162202864700AA4322 /* Sources */,
 				233C15172202864700AA4322 /* Frameworks */,
 				233C15182202864700AA4322 /* Resources */,
+				2E42080F2E44A8DA5E0BF98F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,12 +178,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		17F08D85AF25A02A1DB720CB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TripGenerator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2E42080F2E44A8DA5E0BF98F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		233C15162202864700AA4322 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				233C15202202864700AA4322 /* ViewController.swift in Sources */,
+				233C15202202864700AA4322 /* MainViewController.swift in Sources */,
+				23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */,
 				233C151E2202864700AA4322 /* AppDelegate.swift in Sources */,
 				233C15262202864700AA4322 /* TripGenerator.xcdatamodeld in Sources */,
 			);
@@ -284,6 +381,7 @@
 		};
 		233C15302202864900AA4322 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF524223622A857D68C22B81 /* Pods-TripGenerator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -302,6 +400,7 @@
 		};
 		233C15312202864900AA4322 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 770078469DB390612866E83C /* Pods-TripGenerator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
