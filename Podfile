@@ -9,5 +9,6 @@ target 'TripGenerator' do
   pod 'DropDown'
   pod 'SwiftyJSON'
   pod 'Alamofire'
+  pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
 
 end

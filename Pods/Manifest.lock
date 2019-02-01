@@ -1,10 +1,14 @@
 PODS:
   - Alamofire (4.8.1)
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
   - DropDown (2.3.12)
   - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
   - Alamofire
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - DropDown
   - SwiftyJSON
 
@@ -14,11 +18,21 @@ SPEC REPOS:
     - DropDown
     - SwiftyJSON
 
+EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: 6dd284bde21ea2e7f9fd89bc36f40df16e16369d
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DropDown: 0bcc278799ec11a3d34ce1aac9367fbbaf5423d9
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 1fa716b75781f703a7da9c699c5d743149d65319
+PODFILE CHECKSUM: fb976c33bed3ef31f91e5ac33f204e1893b0bfea
 
 COCOAPODS: 1.5.3
