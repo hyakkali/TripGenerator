@@ -45,7 +45,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         originTextField.text = originList[0]
         tripTypeTextField.text = tripTypeList[0]
-                
+        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int { // number of columns
@@ -98,9 +98,9 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                 self.generateRandomDates()
                 
                 if (self.tripTypeTextField.text! == "Round Trip") {
-                    self.generateRTExpediaURL(origin: self.origin, dest: self.destination, departDate: self.departDate, arrivalDate: self.arrivalDate)
+                    self.generateRTExpediaURL()
                 } else {
-                    self.generateOWExpediaURL(origin: self.origin, dest: self.destination, departDate: self.departDate)
+                    self.generateOWExpediaURL()
                 }
                 
                 self.performSegue(withIdentifier: "goToTripPage", sender: self)
@@ -177,26 +177,64 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     // MARK: - Generate URLS
     
-    func generateRTExpediaURL(origin : String, dest : String, departDate : String, arrivalDate : String) {
-        
+    func generateRTExpediaURL() {
         let departDateArr = departDate.split(separator: " ")
         let arrivalDateArr = arrivalDate.split(separator: " ")
+        
         let departMonth = departDateArr[0]
         let departDay = departDateArr[1]
         let departYear = departDateArr[2]
+        
         let arrMonth = arrivalDateArr[0]
         let arrDay = arrivalDateArr[1]
         let arrYear = arrivalDateArr[2]
         
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from%3A\(origin)%2Cto%3A\(dest)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&leg2=from%3A\(dest)%2Cto%3A\(origin)%%2Cdeparture%3A\(arrMonth)%2F\(arrDay)%2F\(arrYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from%3A\(origin)%2Cto%3A\(destination)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&leg2=from%3A\(destination)%2Cto%3A\(origin)%%2Cdeparture%3A\(arrMonth)%2F\(arrDay)%2F\(arrYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
     }
     
-    func generateOWExpediaURL(origin : String, dest : String, departDate : String) {
+    func generateOWExpediaURL() {
         let departDateArr = departDate.split(separator: " ")
+        
         let departMonth = departDateArr[0]
         let departDay = departDateArr[1]
         let departYear = departDateArr[2]
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3A\(origin)%2Cto%3A\(dest)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
+        
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3A\(origin)%2Cto%3A\(destination)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
+    }
+    
+    func generateRTKayakURL() {
+        let departDateArr = departDate.split(separator: " ")
+        let arrivalDateArr = arrivalDate.split(separator: " ")
+        
+        let departMonth = addHeaderZero(number: String(departDateArr[0]))
+        let departDay = addHeaderZero(number: String(departDateArr[1]))
+        let departYear = departDateArr[2]
+        
+        let arrMonth = addHeaderZero(number: String(arrivalDateArr[0]))
+        let arrDay = addHeaderZero(number: String(arrivalDateArr[1]))
+        let arrYear = arrivalDateArr[2]
+        
+        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destination)/\(departYear)-\(departMonth)-\(departDay)/\(arrYear)-\(arrMonth)-\(arrDay)/1adults?sort=bestflight_a"
+    }
+    
+    func generateOWKayakURL() {
+        let departDateArr = departDate.split(separator: " ")
+        
+        let departMonth = addHeaderZero(number: String(departDateArr[0]))
+        let departDay = addHeaderZero(number: String(departDateArr[1]))
+        let departYear = departDateArr[2]
+        
+        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destination)/\(departYear)-\(departMonth)-\(departDay)/1adults?sort=bestflight_a"
+    }
+    
+    // MARK: - Helper Functions
+    
+    func addHeaderZero(number : String) -> String {
+        if (number.count == 1) {
+            return "0" + number
+        } else {
+            return number
+        }
     }
 
 }
