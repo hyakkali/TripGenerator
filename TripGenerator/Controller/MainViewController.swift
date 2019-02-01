@@ -90,30 +90,40 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             destination = cityList[number]
         }
         
-        Alamofire.request(AIRPORT_URL + formatCityName(city: destination), method: .get).responseJSON { (response) in
-            if response.result.isSuccess {
-                print("Got airport data!")
-                let body : JSON = JSON(response.result.value!)
-                self.destAirportCode = body["response"]["airports_by_cities"][0]["code"].stringValue
-                print(self.destination)
-                print(self.destAirportCode)
-                
-                self.generateRandomDates()
-                
-                if (self.tripTypeTextField.text! == "Round Trip") {
-                    self.generateRTExpediaURL()
-                    self.generateRTKayakURL()
+        if (destination == "Mecca") {
+            destAirportCode = "JED"
+        } else if (destination == "Edirne") {
+            destAirportCode = "IST"
+        } else if (destination == "Petra") {
+            destAirportCode = "AMM"
+        } else if (destination == "Jerusalem") {
+            destAirportCode = "TLV"
+        } else {
+            Alamofire.request(AIRPORT_URL + formatCityName(city: destination), method: .get).responseJSON { (response) in
+                if response.result.isSuccess {
+                    print("Got airport data!")
+                    let body : JSON = JSON(response.result.value!)
+                    self.destAirportCode = body["response"]["airports_by_cities"][0]["code"].stringValue
+                    print(self.destination)
+                    print(self.destAirportCode)
+                    
+                    self.generateRandomDates()
+                    
+                    if (self.tripTypeTextField.text! == "Round Trip") {
+                        self.generateRTExpediaURL()
+                        self.generateRTKayakURL()
+                    } else {
+                        self.generateOWExpediaURL()
+                        self.generateOWKayakURL()
+                    }
+                    
+                    self.performSegue(withIdentifier: "goToTripPage", sender: self)
                 } else {
-                    self.generateOWExpediaURL()
-                    self.generateOWKayakURL()
+                    print("Error \(response.result.error!)")
                 }
-                
-                self.performSegue(withIdentifier: "goToTripPage", sender: self)
-            } else {
-                print("Error \(response.result.error!)")
             }
         }
-        
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -140,7 +150,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let currYear = Int(dateArr[2])
         var arrYear = 0
 
-        let newMonth : Int = Int.random(in: (currMonth! + 1) ... 12) // generate random month from next month to Dec
+        let newMonth : Int = Int.random(in: (currMonth! + 1) ... (currMonth! + 8)) // generate random month from next month to Dec
         var newDay : Int = 0
 
         if (newMonth == 1 || newMonth == 3 || newMonth == 5 || newMonth == 7 || newMonth == 8 || newMonth == 10 || newMonth == 12) {
@@ -194,7 +204,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let arrDay = arrivalDateArr[1]
         let arrYear = arrivalDateArr[2]
         
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:BOS,to:RDU,departure:\(departMonth)/\(departDay)/\(departYear)TANYT&leg2=from:\(destAirportCode),to:\(origin),departure:\(arrMonth)/\(arrDay)/\(arrYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:\(origin),to:\(destAirportCode),departure:\(departMonth)/\(departDay)/\(departYear)TANYT&leg2=from:\(destAirportCode),to:\(origin),departure:\(arrMonth)/\(arrDay)/\(arrYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
     }
     
     func generateOWExpediaURL() {
