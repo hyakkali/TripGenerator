@@ -13,6 +13,8 @@
 		233C15262202864700AA4322 /* TripGenerator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */; };
 		233C15282202864900AA4322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 233C15272202864900AA4322 /* Assets.xcassets */; };
 		233C152B2202864900AA4322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 233C15292202864900AA4322 /* LaunchScreen.storyboard */; };
+		237F4F212204AD35007307A9 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F4F202204AD35007307A9 /* Trip.swift */; };
+		237F4F232204ADC1007307A9 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F4F222204ADC1007307A9 /* Place.swift */; };
 		23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC64CD2203636500207CB1 /* TripViewController.swift */; };
 		6AB66D2C8734377AD4D6B61B /* Pods_TripGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */; };
 /* End PBXBuildFile section */
@@ -26,6 +28,8 @@
 		233C15272202864900AA4322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		233C152A2202864900AA4322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		233C152C2202864900AA4322 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		237F4F202204AD35007307A9 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		237F4F222204ADC1007307A9 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		23CC64CD2203636500207CB1 /* TripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
 		23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		770078469DB390612866E83C /* Pods-TripGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripGenerator.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator.release.xcconfig"; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 		233C151C2202864700AA4322 /* TripGenerator */ = {
 			isa = PBXGroup;
 			children = (
+				237F4F1F2204AD27007307A9 /* Data */,
 				233C151D2202864700AA4322 /* AppDelegate.swift */,
 				23CC64CF22036B8800207CB1 /* Controller */,
 				23AFAB9C220386F4001A50A5 /* View */,
@@ -73,6 +78,15 @@
 				233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */,
 			);
 			path = TripGenerator;
+			sourceTree = "<group>";
+		};
+		237F4F1F2204AD27007307A9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				237F4F202204AD35007307A9 /* Trip.swift */,
+				237F4F222204ADC1007307A9 /* Place.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		23AFAB9C220386F4001A50A5 /* View */ = {
@@ -238,8 +252,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				237F4F212204AD35007307A9 /* Trip.swift in Sources */,
 				233C15202202864700AA4322 /* MainViewController.swift in Sources */,
 				23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */,
+				237F4F232204ADC1007307A9 /* Place.swift in Sources */,
 				233C151E2202864700AA4322 /* AppDelegate.swift in Sources */,
 				233C15262202864700AA4322 /* TripGenerator.xcdatamodeld in Sources */,
 			);

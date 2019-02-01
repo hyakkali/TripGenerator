@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import RealmSwift
 
 class TripViewController : UIViewController {
     
