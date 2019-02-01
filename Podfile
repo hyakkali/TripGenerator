@@ -6,9 +6,9 @@ target 'TripGenerator' do
   use_frameworks!
 
   # Pods for TripGenerator
-  pod 'DropDown'
   pod 'SwiftyJSON'
   pod 'Alamofire'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+  pod 'RealmSwift'
 
 end
