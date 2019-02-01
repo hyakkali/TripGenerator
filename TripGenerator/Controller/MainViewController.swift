@@ -15,7 +15,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     @IBOutlet weak var originTextField: UITextField!
     @IBOutlet weak var tripTypeTextField: UITextField!
     
-    let originList = ["Raleigh", "Boston", "New York City"]
+    let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
     let tripTypeList = ["Round Trip", "One Way"]
     let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
     
@@ -25,8 +25,9 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var kayak_url = ""
     var departDate = ""
     var arrivalDate = ""
-    var origin = ""
+    var origin = "RDU"
     var destination = ""
+    var destAirportCode = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +76,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         } else {
             tripTypeTextField.text = tripTypeList[row]
         }
+        
+        self.view.endEditing(true)
     }
     
     @IBAction func generateTrip(_ sender: Any) {
@@ -87,20 +90,22 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             destination = cityList[number]
         }
         
-        Alamofire.request(AIRPORT_URL + destination, method: .get).responseJSON { (response) in
+        Alamofire.request(AIRPORT_URL + formatCityName(city: destination), method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 print("Got airport data!")
                 let body : JSON = JSON(response.result.value!)
-                let airportName = body["response"]["airports_by_cities"][0]["code"].stringValue
+                self.destAirportCode = body["response"]["airports_by_cities"][0]["code"].stringValue
                 print(self.destination)
-                print(airportName)
+                print(self.destAirportCode)
                 
                 self.generateRandomDates()
                 
                 if (self.tripTypeTextField.text! == "Round Trip") {
                     self.generateRTExpediaURL()
+                    self.generateRTKayakURL()
                 } else {
                     self.generateOWExpediaURL()
+                    self.generateOWKayakURL()
                 }
                 
                 self.performSegue(withIdentifier: "goToTripPage", sender: self)
@@ -115,6 +120,11 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let destinationVC = segue.destination as! TripViewController
         print("performing segue")
         destinationVC.location = destination
+        destinationVC.expediaURL = expedia_url
+        destinationVC.kayakURL = kayak_url
+        destinationVC.departDate = departDate
+        destinationVC.arrivalDate = arrivalDate
+        destinationVC.tripType = tripTypeTextField.text!
     }
     
     func generateRandomDates() {
@@ -127,15 +137,10 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let dateArr = currentDate.split(separator: " ")
 
         let currMonth = Int(dateArr[0])
-        let currDay = Int(dateArr[1])
         let currYear = Int(dateArr[2])
         var arrYear = 0
 
-        print(currMonth!)
-        print(currDay!)
-        print(currYear!)
-
-        let newMonth : Int = Int.random(in: currMonth! ... 12) // generate random month from current month to Dec
+        let newMonth : Int = Int.random(in: (currMonth! + 1) ... 12) // generate random month from next month to Dec
         var newDay : Int = 0
 
         if (newMonth == 1 || newMonth == 3 || newMonth == 5 || newMonth == 7 || newMonth == 8 || newMonth == 10 || newMonth == 12) {
@@ -189,7 +194,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let arrDay = arrivalDateArr[1]
         let arrYear = arrivalDateArr[2]
         
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from%3A\(origin)%2Cto%3A\(destination)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&leg2=from%3A\(destination)%2Cto%3A\(origin)%%2Cdeparture%3A\(arrMonth)%2F\(arrDay)%2F\(arrYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:BOS,to:RDU,departure:\(departMonth)/\(departDay)/\(departYear)TANYT&leg2=from:\(destAirportCode),to:\(origin),departure:\(arrMonth)/\(arrDay)/\(arrYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
     }
     
     func generateOWExpediaURL() {
@@ -199,7 +204,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let departDay = departDateArr[1]
         let departYear = departDateArr[2]
         
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3A\(origin)%2Cto%3A\(destination)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3A\(origin)%2Cto%3A\(destAirportCode)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
     }
     
     func generateRTKayakURL() {
@@ -214,7 +219,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let arrDay = addHeaderZero(number: String(arrivalDateArr[1]))
         let arrYear = arrivalDateArr[2]
         
-        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destination)/\(departYear)-\(departMonth)-\(departDay)/\(arrYear)-\(arrMonth)-\(arrDay)/1adults?sort=bestflight_a"
+        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destAirportCode)/\(departYear)-\(departMonth)-\(departDay)/\(arrYear)-\(arrMonth)-\(arrDay)/1adults?sort=bestflight_a"
     }
     
     func generateOWKayakURL() {
@@ -224,10 +229,10 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let departDay = addHeaderZero(number: String(departDateArr[1]))
         let departYear = departDateArr[2]
         
-        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destination)/\(departYear)-\(departMonth)-\(departDay)/1adults?sort=bestflight_a"
+        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destAirportCode)/\(departYear)-\(departMonth)-\(departDay)/1adults?sort=bestflight_a"
     }
     
-    // MARK: - Helper Functions
+    // MARK: - Helper Methods
     
     func addHeaderZero(number : String) -> String {
         if (number.count == 1) {
@@ -235,6 +240,10 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         } else {
             return number
         }
+    }
+    
+    func formatCityName(city : String) -> String {
+        return city.replacingOccurrences(of: " ", with: "%20")
     }
 
 }
