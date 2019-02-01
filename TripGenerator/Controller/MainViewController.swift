@@ -204,7 +204,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let departDay = departDateArr[1]
         let departYear = departDateArr[2]
         
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from%3A\(origin)%2Cto%3A\(destAirportCode)%2Cdeparture%3A\(departMonth)%2F\(departDay)%2F\(departYear)TANYT&passengers=adults%3A1%2Cchildren%3A0%2Cseniors%3A0%2Cinfantinlap%3AY&options=cabinclass%3Aeconomy&mode=search&origref=www.expedia.com"
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from:\(origin),to:\(destAirportCode),departure:\(departMonth)/\(departDay)/\(departYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
     }
     
     func generateRTKayakURL() {
