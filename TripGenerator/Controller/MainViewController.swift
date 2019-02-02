@@ -23,6 +23,14 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     let tripTypeList = ["Round Trip", "One Way"]
     let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
     
+    let noAirportDict : [String : String] = [
+        "Mecca" : "JED",
+        "Edirne" : "IST",
+        "Petra" : "AMM",
+        "Jerusalem" : "TLV",
+        "Washington D.C." : "IAD"
+    ]
+    
     // URL to get valid airport code
     let AIRPORT_URL = "https://iatacodes.org/api/v6/autocomplete?api_key=9e145a85-8a4f-4f41-aaf3-e807721840ff&query="
     var expedia_url = ""
@@ -37,23 +45,6 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         super.viewDidLoad()
         
         setupPickerViews()
-    }
-    
-    func addInitialData() {
-        // TODO: add these places to database when app starts
-        let initialData : [String : String] = [
-            "Mecca" : "JED",
-            "Edirne" : "IST",
-            "Petra" : "AMM",
-            "Jerusalem" : "TLV"
-        ]
-        
-        for (city, code) in initialData {
-            let place = Place()
-            place.name = city
-            place.airportCode = code
-            savePlace(place: place)
-        }
     }
     
     func setupPickerViews() {
@@ -80,19 +71,11 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { // number of rows
-        if pickerView.tag == 1 {
-            return originList.count
-        } else {
-            return tripTypeList.count
-        }
+        return pickerView.tag == 1 ? originList.count : tripTypeList.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? { // sets title for each row
-        if pickerView.tag == 1 {
-            return originList[row]
-        } else {
-            return tripTypeList[row]
-        }
+        return pickerView.tag == 1 ? originList[row] : tripTypeList[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) { // set text of textfield to row value
@@ -118,7 +101,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         // check if destination is an attribute on any places
         let destinationData = realm.objects(Place.self).filter("name = %@", destination)
         
-        if (!destinationData.isEmpty) {
+        if (!destinationData.isEmpty) { // if place exists in database
             destAirportCode = (destinationData.first?.airportCode)!
             generateTripDetails()
         } else {
@@ -130,13 +113,15 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                     print(self.destination)
                     print(self.destAirportCode)
                     
-                    let place = Place()
-                    place.airportCode = self.destAirportCode
-                    place.name = self.destination
-                    
-                    self.savePlace(place: place)
-                    
-                    self.generateTripDetails()
+                    // if airport code empty, check dict to get the right airport code
+                    if self.destAirportCode == "" {
+                        self.destAirportCode = self.noAirportDict[self.destination]!
+                        self.createPlace()
+                        self.generateTripDetails()
+                    } else {
+                        self.createPlace()
+                        self.generateTripDetails()
+                    }
                     
                 } else {
                     print("Error \(response.result.error!)")
@@ -173,7 +158,6 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     // MARK: - Date Functions
     
     func generateRandomDates() {
-
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM dd y"
         let currentDate = dateFormatter.string(from: Date())
@@ -184,11 +168,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let currYear = Int(currentDateArr[2])
 
         let departMonth : Int = Int.random(in: (currMonth! + 1) ... (currMonth! + 8)) // generate random month from next month to Dec
-
         let departDay = generateRandomDay(month: departMonth)
-        
-        print(departMonth)
-        print(departDay)
         
         var arrMonth = 0
         var arrYear = 0
@@ -199,12 +179,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         let arrDay = generateRandomDay(month: arrMonth)
         
-        print(arrMonth)
-        print(arrDay)
-        
         departDate = String(departMonth) + " " + String(departDay) + " " + String(currYear!)
         arrivalDate = String(arrMonth) + " " + String(arrDay) + " " + String(arrYear)
- 
     }
     
     func generateRandomDay(month : Int) -> Int {
@@ -283,6 +259,14 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     func loadPlaces() {
         placeArray = realm.objects(Place.self) // gets all places from database
+    }
+    
+    func createPlace() {
+        let place = Place()
+        place.airportCode = destAirportCode
+        place.name = destination
+        
+        savePlace(place: place)
     }
     
     func savePlace(place : Place) { // use filter to find if airport code exists in database already
