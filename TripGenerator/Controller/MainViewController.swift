@@ -13,6 +13,9 @@ import RealmSwift
 
 class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    let realm = try! Realm()
+    var placeArray : Results<Place>?
+    
     @IBOutlet weak var originTextField: UITextField!
     @IBOutlet weak var tripTypeTextField: UITextField!
     
@@ -32,7 +35,11 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupPickerViews()
+    }
+    
+    func setupPickerViews() {
         let originPickerView = UIPickerView()
         let tripTypePickerView = UIPickerView()
         
@@ -47,8 +54,9 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         originTextField.text = originList[0]
         tripTypeTextField.text = tripTypeList[0]
-        
     }
+    
+    // MARK: - PickerView Methods
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int { // number of columns
         return 1
@@ -81,15 +89,23 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         self.view.endEditing(true)
     }
     
+    // MARK: - Generate Trip
+    
     @IBAction func generateTrip(_ sender: Any) {
         
-        var number : Int = Int.random(in: 0 ..< cityList.count)
+        let number : Int = Int.random(in: 0 ..< cityList.count)
         destination = cityList[number]
         
-        while (destination == originTextField.text!) {
-            number = Int.random(in: 0 ..< cityList.count)
-            destination = cityList[number]
-        }
+        // TODO: check if destination is equal to origin
+
+        
+        // check if destination is an attribute on any places
+        
+        let destinationData = realm.objects(Place.self).filter("name = %@", destination)
+        
+        // if destination exists, use that airport code
+        
+        // else proceed with the API call
         
         if (destination == "Mecca") {
             destAirportCode = "JED"
@@ -108,15 +124,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                     print(self.destination)
                     print(self.destAirportCode)
                     
-                    self.generateRandomDates()
-                    
-                    if (self.tripTypeTextField.text! == "Round Trip") {
-                        self.generateRTExpediaURL()
-                        self.generateRTKayakURL()
-                    } else {
-                        self.generateOWExpediaURL()
-                        self.generateOWKayakURL()
-                    }
+                    self.generateTripDetails()
                     
                     self.performSegue(withIdentifier: "goToTripPage", sender: self)
                 } else {
@@ -127,9 +135,20 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     }
     
+    func generateTripDetails() {
+        self.generateRandomDates()
+        
+        if (self.tripTypeTextField.text! == "Round Trip") {
+            self.generateRTExpediaURL()
+            self.generateRTKayakURL()
+        } else {
+            self.generateOWExpediaURL()
+            self.generateOWKayakURL()
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TripViewController
-        print("performing segue")
         destinationVC.location = destination
         destinationVC.expediaURL = expedia_url
         destinationVC.kayakURL = kayak_url
@@ -138,60 +157,54 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         destinationVC.tripType = tripTypeTextField.text!
     }
     
+    // MARK: - Date Functions
+    
     func generateRandomDates() {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM dd y"
         let currentDate = dateFormatter.string(from: Date())
-        print(currentDate)
 
-        let dateArr = currentDate.split(separator: " ")
+        let currentDateArr = currentDate.split(separator: " ")
 
-        let currMonth = Int(dateArr[0])
-        let currYear = Int(dateArr[2])
-        var arrYear = 0
+        let currMonth = Int(currentDateArr[0])
+        let currYear = Int(currentDateArr[2])
 
-        let newMonth : Int = Int.random(in: (currMonth! + 1) ... (currMonth! + 8)) // generate random month from next month to Dec
-        var newDay : Int = 0
+        let departMonth : Int = Int.random(in: (currMonth! + 1) ... (currMonth! + 8)) // generate random month from next month to Dec
 
-        if (newMonth == 1 || newMonth == 3 || newMonth == 5 || newMonth == 7 || newMonth == 8 || newMonth == 10 || newMonth == 12) {
-            newDay = Int.random(in: 1 ... 31)
-        } else if (newMonth == 4 ||  newMonth == 6 || newMonth == 9 || newMonth == 11) {
-            newDay = Int.random(in: 1 ... 30)
-        } else if (newMonth == 2) {
-            newDay = Int.random(in: 1 ... 28)
-        }
+        let departDay = generateRandomDay(month: departMonth)
         
-        print(newMonth)
-        print(newDay)
+        print(departMonth)
+        print(departDay)
+        
         var arrMonth = 0
-        var arrDay : Int = 0
+        var arrYear = 0
         
-        if (newMonth == 12) { // if depart month is december, add one to year and set arrival month to jan
-            arrMonth = 1
-            arrYear = currYear! + 1
-        } else {
-            arrMonth = newMonth + 1
-            arrYear = currYear!
-        }
+        // if depart month is december, add one to year and set arrival month to jan
+        arrYear = departMonth == 12 ? currYear! + 1 : currYear!
+        arrMonth = departMonth == 12 ? 1 : departMonth + 1
         
-        if (arrMonth == 1 || arrMonth == 3 || arrMonth == 5 || arrMonth == 7 || arrMonth == 8 || arrMonth == 10 || arrMonth == 12) {
-            arrDay = Int.random(in: 1 ... 31)
-        } else if (arrMonth == 4 ||  arrMonth == 6 || arrMonth == 9 || arrMonth == 11) {
-            arrDay = Int.random(in: 1 ... 30)
-        } else if (arrMonth == 2) {
-            arrDay = Int.random(in: 1 ... 28)
-        }
+        let arrDay = generateRandomDay(month: arrMonth)
         
         print(arrMonth)
         print(arrDay)
         
-        departDate = String(newMonth) + " " + String(newDay) + " " + String(currYear!)
+        departDate = String(departMonth) + " " + String(departDay) + " " + String(currYear!)
         arrivalDate = String(arrMonth) + " " + String(arrDay) + " " + String(arrYear)
  
     }
     
-    // MARK: - Generate URLS
+    func generateRandomDay(month : Int) -> Int {
+        if (month == 4 ||  month == 6 || month == 9 || month == 11) {
+            return Int.random(in: 1 ... 30)
+        } else if (month == 2) {
+            return Int.random(in: 1 ... 28)
+        } else {
+            return Int.random(in: 1 ... 31) // else month is a month with 31 days
+        }
+    }
+    
+    // MARK: - Generate URLS)
     
     func generateRTExpediaURL() {
         let departDateArr = departDate.split(separator: " ")
@@ -246,15 +259,27 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     // MARK: - Helper Methods
     
     func addHeaderZero(number : String) -> String {
-        if (number.count == 1) {
-            return "0" + number
-        } else {
-            return number
-        }
+        return number.count == 1 ? "0" + number : number
     }
     
     func formatCityName(city : String) -> String {
         return city.replacingOccurrences(of: " ", with: "%20")
+    }
+    
+    // MARK: - Database Methods
+    
+    func loadPlaces() {
+        placeArray = realm.objects(Place.self) // gets all places from database
+    }
+    
+    func savePlace(place : Place) { // use filter to find if airport code exists in database already
+        do {
+            try realm.write {
+                realm.add(place)
+            }
+        } catch {
+            print("Error saving place to Realm \(error)")
+        }
     }
 
 }
