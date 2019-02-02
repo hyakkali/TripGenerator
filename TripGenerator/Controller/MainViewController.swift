@@ -39,6 +39,23 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         setupPickerViews()
     }
     
+    func addInitialData() {
+        // TODO: add these places to database when app starts
+        let initialData : [String : String] = [
+            "Mecca" : "JED",
+            "Edirne" : "IST",
+            "Petra" : "AMM",
+            "Jerusalem" : "TLV"
+        ]
+        
+        for (city, code) in initialData {
+            let place = Place()
+            place.name = city
+            place.airportCode = code
+            savePlace(place: place)
+        }
+    }
+    
     func setupPickerViews() {
         let originPickerView = UIPickerView()
         let tripTypePickerView = UIPickerView()
@@ -97,24 +114,13 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         destination = cityList[number]
         
         // TODO: check if destination is equal to origin
-
         
         // check if destination is an attribute on any places
-        
         let destinationData = realm.objects(Place.self).filter("name = %@", destination)
         
-        // if destination exists, use that airport code
-        
-        // else proceed with the API call
-        
-        if (destination == "Mecca") {
-            destAirportCode = "JED"
-        } else if (destination == "Edirne") {
-            destAirportCode = "IST"
-        } else if (destination == "Petra") {
-            destAirportCode = "AMM"
-        } else if (destination == "Jerusalem") {
-            destAirportCode = "TLV"
+        if (!destinationData.isEmpty) {
+            destAirportCode = (destinationData.first?.airportCode)!
+            generateTripDetails()
         } else {
             Alamofire.request(AIRPORT_URL + formatCityName(city: destination), method: .get).responseJSON { (response) in
                 if response.result.isSuccess {
@@ -124,9 +130,14 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                     print(self.destination)
                     print(self.destAirportCode)
                     
+                    let place = Place()
+                    place.airportCode = self.destAirportCode
+                    place.name = self.destination
+                    
+                    self.savePlace(place: place)
+                    
                     self.generateTripDetails()
                     
-                    self.performSegue(withIdentifier: "goToTripPage", sender: self)
                 } else {
                     print("Error \(response.result.error!)")
                 }
@@ -145,6 +156,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             self.generateOWExpediaURL()
             self.generateOWKayakURL()
         }
+        
+        self.performSegue(withIdentifier: "goToTripPage", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -204,7 +217,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         }
     }
     
-    // MARK: - Generate URLS)
+    // MARK: - Generate URLS
     
     func generateRTExpediaURL() {
         let departDateArr = departDate.split(separator: " ")
