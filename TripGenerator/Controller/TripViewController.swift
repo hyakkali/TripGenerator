@@ -9,6 +9,7 @@
 import UIKit
 import SafariServices
 import RealmSwift
+import GooglePlaces
 
 class TripViewController : UIViewController {
     
@@ -19,17 +20,19 @@ class TripViewController : UIViewController {
     var arrivalDate : String = ""
     var tripType : String = ""
     
+    var placesClient : GMSPlacesClient!
+    
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
     @IBOutlet weak var tripTypeLabel: UILabel!
+    
+    @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationLabel.text = location
-        
-        print(kayakURL)
-        
+                
         formatDates()
         
         tripTypeLabel.text = tripType
@@ -39,6 +42,30 @@ class TripViewController : UIViewController {
         } else {
             tripDatesLabel.text = departDate
         }
+        
+        placesClient = GMSPlacesClient.shared()
+        
+        // Specify the place data types to return (in this case, just photos).
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.photos.rawValue))!
+        
+        placesClient?.fetchPlace(fromPlaceID: "ChIJVZKCP0EvdTERfHvs6AfGjok", placeFields: fields, sessionToken: nil, callback: { (place, error) in
+            if let error = error {
+                print("An error occurred: \(error.localizedDescription)")
+                return
+            }
+            if let place = place {
+                let photoMetadata : GMSPlacePhotoMetadata = place.photos![0]
+                
+                self.placesClient?.loadPlacePhoto(photoMetadata, callback: { (photo, error) in
+                    if let error = error {
+                        print("Error loading photo metadata \(error.localizedDescription)")
+                        return
+                    } else {
+                        self.imageView.image = photo
+                    }
+                })
+            }
+        })
         
     }
     

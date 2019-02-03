@@ -123,12 +123,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxA-QA-Cyi">
+                                <rect key="frame" x="36" y="226" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="IYM-n6-Vfv"/>
                     </view>
                     <navigationItem key="navigationItem" id="2El-ub-338"/>
                     <connections>
+                        <outlet property="imageView" destination="zxA-QA-Cyi" id="fTC-br-SIw"/>
                         <outlet property="locationLabel" destination="vNy-dv-LdN" id="M0J-9J-SJc"/>
                         <outlet property="tripDatesLabel" destination="NG0-sa-Bar" id="U39-U5-Kow"/>
                         <outlet property="tripTypeLabel" destination="uio-nz-Daf" id="g1k-6r-ykt"/>

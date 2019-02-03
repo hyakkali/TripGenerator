@@ -19,6 +19,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     @IBOutlet weak var originTextField: UITextField!
     @IBOutlet weak var tripTypeTextField: UITextField!
     
+    // TODO: make origin a place object as well to compare
     let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
     let tripTypeList = ["Round Trip", "One Way"]
     let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
@@ -33,18 +34,25 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     // URL to get valid airport code
     let AIRPORT_URL = "https://iatacodes.org/api/v6/autocomplete?api_key=9e145a85-8a4f-4f41-aaf3-e807721840ff&query="
+    let PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=things+to+do+in+"
+    let PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo?"
+    let KEY = "&key="
+    let PHOTO_SIZE = "&maxheight=400&maxwidth=400&photoreference="
+    let PLACES_API_KEY = "AIzaSyB8AVDjX7tbuZqTyOQZuwKcur7MZM6QE0M"
     var expedia_url = ""
     var kayak_url = ""
     var departDate = ""
     var arrivalDate = ""
     var origin = "RDU"
-    var destination = ""
+    var destination = "Ho Chi Minh"
     var destAirportCode = ""
+    var attractionsDict : [String : String] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupPickerViews()
+//        getAttractions()
     }
     
     func setupPickerViews() {
@@ -116,12 +124,10 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                     // if airport code empty, check dict to get the right airport code
                     if self.destAirportCode == "" {
                         self.destAirportCode = self.noAirportDict[self.destination]!
-                        self.createPlace()
-                        self.generateTripDetails()
-                    } else {
-                        self.createPlace()
-                        self.generateTripDetails()
                     }
+                    
+                    self.createPlace()
+                    self.generateTripDetails()
                     
                 } else {
                     print("Error \(response.result.error!)")
@@ -129,6 +135,21 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             }
         }
     
+    }
+    
+    func getAttractions() {
+        Alamofire.request(PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY , method: .get).responseJSON { (response) in
+            if response.result.isSuccess {
+                print("got places data!")
+                let body : JSON = JSON(response.result.value!)
+                for (_, info) in body["results"] {
+//                    print(info["name"])
+                    self.attractionsDict[info["name"].string!] = info["place_id"].string!
+                }
+            } else {
+                print("Error in places API \(response.result.error!)")
+            }
+        }
     }
     
     func generateTripDetails() {

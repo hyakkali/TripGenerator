@@ -49,6 +49,14 @@ THE SOFTWARE.
 > SOFTWARE. 
 
 
+## GoogleMaps
+
+Copyright 2018 Google
+
+## GooglePlaces
+
+Copyright 2018 Google
+
 ## Realm
 
 TABLE OF CONTENTS
