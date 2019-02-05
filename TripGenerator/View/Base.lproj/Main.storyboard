@@ -69,6 +69,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="p1y-bh-0Er"/>
                     <connections>
+                        <outlet property="greetingLabel" destination="FiO-yd-4lo" id="Jeu-dF-gU9"/>
                         <outlet property="originTextField" destination="MIC-4a-U0N" id="rUB-gq-R5l"/>
                         <outlet property="tripTypeTextField" destination="dah-v0-UIZ" id="68o-Dc-dVn"/>
                         <segue destination="UhS-mX-KZj" kind="show" identifier="goToTripPage" id="CfF-HU-qzq"/>

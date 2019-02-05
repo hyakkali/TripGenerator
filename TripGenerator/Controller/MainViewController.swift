@@ -19,6 +19,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     @IBOutlet weak var originTextField: UITextField!
     @IBOutlet weak var tripTypeTextField: UITextField!
     
+    @IBOutlet weak var greetingLabel: UILabel!
+    
     // TODO: make origin a place object as well to compare
     let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
     let tripTypeList = ["Round Trip", "One Way"]
@@ -52,7 +54,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         super.viewDidLoad()
         
         setupPickerViews()
-//        getAttractions()
+        displayGreeting()
     }
     
     func setupPickerViews() {
@@ -212,6 +214,26 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         } else {
             return Int.random(in: 1 ... 31) // else month is a month with 31 days
         }
+    }
+    
+    func displayGreeting() {
+        let date = NSDate()
+        let calendar = NSCalendar.current
+        let currHour = calendar.component(.hour, from: date as Date)
+        let hour = Int(currHour.description)!
+        
+        if (hour >= 0 && hour <= 7) {
+            greetingLabel.text = "Go to sleep!"
+        } else if (hour >= 7 && hour <= 12) {
+            greetingLabel.text = "Good Morning!"
+        } else if (hour >= 12 && hour <= 16) {
+            greetingLabel.text = "Good Afternoon!"
+        } else if (hour >= 16 && hour <= 20) {
+            greetingLabel.text = "Good Evening!"
+        } else if (hour >= 20 && hour <= 24) {
+            greetingLabel.text = "Good Night!"
+        }
+
     }
     
     // MARK: - Generate URLS
