@@ -24,7 +24,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     // TODO: make origin a place object as well to compare
     let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
     let tripTypeList = ["Round Trip", "One Way"]
-    let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
+    let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh City", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
     
     let noAirportDict : [String : String] = [
         "Mecca" : "JED",
@@ -36,7 +36,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     // URL to get valid airport code
     let AIRPORT_URL = "https://iatacodes.org/api/v6/autocomplete?api_key=9e145a85-8a4f-4f41-aaf3-e807721840ff&query="
-    let PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=things+to+do+in+"
+    let PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
     let PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo?"
     let KEY = "&key="
     let PHOTO_SIZE = "&maxheight=400&maxwidth=400&photoreference="
@@ -46,9 +46,9 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var departDate = ""
     var arrivalDate = ""
     var origin = "RDU"
-    var destination = "Ho Chi Minh"
+    var destination = ""
     var destAirportCode = ""
-    var attractionsDict : [String : String] = [:]
+    var destPlaceID = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +113,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         if (!destinationData.isEmpty) { // if place exists in database
             destAirportCode = (destinationData.first?.airportCode)!
-            generateTripDetails()
+            getAttractions()
+//            generateTripDetails()
         } else {
             Alamofire.request(AIRPORT_URL + formatCityName(city: destination), method: .get).responseJSON { (response) in
                 if response.result.isSuccess {
@@ -129,7 +130,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                     }
                     
                     self.createPlace()
-                    self.generateTripDetails()
+                    self.getAttractions()
                     
                 } else {
                     print("Error \(response.result.error!)")
@@ -144,10 +145,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             if response.result.isSuccess {
                 print("got places data!")
                 let body : JSON = JSON(response.result.value!)
-                for (_, info) in body["results"] {
-//                    print(info["name"])
-                    self.attractionsDict[info["name"].string!] = info["place_id"].string!
-                }
+                self.destPlaceID = body["results"][0]["place_id"].string!
+                self.generateTripDetails()
             } else {
                 print("Error in places API \(response.result.error!)")
             }
@@ -170,12 +169,13 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TripViewController
-        destinationVC.location = destination
+        destinationVC.destination = destination
         destinationVC.expediaURL = expedia_url
         destinationVC.kayakURL = kayak_url
         destinationVC.departDate = departDate
         destinationVC.arrivalDate = arrivalDate
         destinationVC.tripType = tripTypeTextField.text!
+        destinationVC.destPlaceID = destPlaceID
     }
     
     // MARK: - Date Functions
@@ -223,15 +223,15 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let hour = Int(currHour.description)!
         
         if (hour >= 0 && hour <= 7) {
-            greetingLabel.text = "Go to sleep!"
+            greetingLabel.text = "Go to sleep baby!"
         } else if (hour >= 7 && hour <= 12) {
-            greetingLabel.text = "Good Morning!"
+            greetingLabel.text = "Good morning cutie :)"
         } else if (hour >= 12 && hour <= 16) {
-            greetingLabel.text = "Good Afternoon!"
+            greetingLabel.text = "Hi babe!"
         } else if (hour >= 16 && hour <= 20) {
-            greetingLabel.text = "Good Evening!"
+            greetingLabel.text = "Hi baby!"
         } else if (hour >= 20 && hour <= 24) {
-            greetingLabel.text = "Good Night!"
+            greetingLabel.text = "Good night cutie baby!"
         }
 
     }
@@ -308,7 +308,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let place = Place()
         place.airportCode = destAirportCode
         place.name = destination
-        
+        print("saving place!")
         savePlace(place: place)
     }
     

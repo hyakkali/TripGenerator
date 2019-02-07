@@ -57,9 +57,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Good Morning!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FiO-yd-4lo">
-                                <rect key="frame" x="71" y="84" width="233" height="53"/>
+                                <rect key="frame" x="16" y="84" width="343" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -90,20 +90,12 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Singapore" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNy-dv-LdN">
                                 <rect key="frame" x="64" y="88" width="246" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1N-wg-Po6">
-                                <rect key="frame" x="65" y="490" width="55" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Expedia"/>
-                                <connections>
-                                    <action selector="expediaButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="1KK-Xp-nnU"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Cd-pU-lLX">
-                                <rect key="frame" x="264" y="490" width="41" height="30"/>
+                                <rect key="frame" x="252" y="216" width="41" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Kayak"/>
                                 <connections>
@@ -125,16 +117,51 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxA-QA-Cyi">
-                                <rect key="frame" x="36" y="226" width="240" height="128"/>
+                                <rect key="frame" x="41" y="273" width="124" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6kt-lC-eGS">
+                                <rect key="frame" x="210" y="273" width="124" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BVk-8E-Mp8">
+                                <rect key="frame" x="41" y="446" width="124" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UNy-Rw-DjW">
+                                <rect key="frame" x="210" y="446" width="124" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jcl-OU-hdv">
+                                <rect key="frame" x="210" y="273" width="124" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecp-nH-kaz">
+                                <rect key="frame" x="128" y="603" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Favorite This Trip"/>
+                                <connections>
+                                    <action selector="favoriteButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="9vj-uZ-NIp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1N-wg-Po6">
+                                <rect key="frame" x="76" y="216" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Expedia"/>
+                                <connections>
+                                    <action selector="expediaButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="1KK-Xp-nnU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="IYM-n6-Vfv"/>
                     </view>
                     <navigationItem key="navigationItem" id="2El-ub-338"/>
                     <connections>
-                        <outlet property="imageView" destination="zxA-QA-Cyi" id="fTC-br-SIw"/>
+                        <outlet property="imageView1" destination="zxA-QA-Cyi" id="Huh-hM-jdd"/>
+                        <outlet property="imageView2" destination="jcl-OU-hdv" id="cDw-eE-fOZ"/>
+                        <outlet property="imageView3" destination="BVk-8E-Mp8" id="yyY-P3-hxY"/>
+                        <outlet property="imageView4" destination="UNy-Rw-DjW" id="Nxv-1H-lJN"/>
                         <outlet property="locationLabel" destination="vNy-dv-LdN" id="M0J-9J-SJc"/>
                         <outlet property="tripDatesLabel" destination="NG0-sa-Bar" id="U39-U5-Kow"/>
                         <outlet property="tripTypeLabel" destination="uio-nz-Daf" id="g1k-6r-ykt"/>
