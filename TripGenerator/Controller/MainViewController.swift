@@ -169,12 +169,13 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TripViewController
-        destinationVC.destination = destination
-        destinationVC.expediaURL = expedia_url
-        destinationVC.kayakURL = kayak_url
-        destinationVC.departDate = departDate
-        destinationVC.arrivalDate = arrivalDate
-        destinationVC.tripType = tripTypeTextField.text!
+//        destinationVC.destination = destination
+//        destinationVC.expediaURL = expedia_url
+//        destinationVC.kayakURL = kayak_url
+//        destinationVC.departDate = departDate
+//        destinationVC.arrivalDate = arrivalDate
+//        destinationVC.tripType = tripTypeTextField.text!
+        destinationVC.trip = createTrip()
         destinationVC.destPlaceID = destPlaceID
     }
     
@@ -320,6 +321,19 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         } catch {
             print("Error saving place to Realm \(error)")
         }
+    }
+    
+    func createTrip() -> Trip {
+        let trip = Trip()
+        trip.arrivalDate = arrivalDate
+        trip.departDate = departDate
+        trip.destination = destination
+        trip.expediaURL = expedia_url
+        trip.kayakURL = kayak_url
+        //        trip.origin = origin
+        trip.tripType = tripTypeTextField.text!
+        //        trip.destPlaceID = destPlaceID
+        return trip
     }
 
 }

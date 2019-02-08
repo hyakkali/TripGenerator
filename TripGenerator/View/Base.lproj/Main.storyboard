@@ -158,6 +158,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="2El-ub-338"/>
                     <connections>
+                        <outlet property="favoriteButton" destination="ecp-nH-kaz" id="D39-ea-cKd"/>
                         <outlet property="imageView1" destination="zxA-QA-Cyi" id="Huh-hM-jdd"/>
                         <outlet property="imageView2" destination="jcl-OU-hdv" id="cDw-eE-fOZ"/>
                         <outlet property="imageView3" destination="BVk-8E-Mp8" id="yyY-P3-hxY"/>

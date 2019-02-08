@@ -22,8 +22,16 @@ class TripViewController : UIViewController {
     var arrivalDate : String = ""
     var tripType : String = ""
     var destPlaceID = ""
+    
+    var trip : Trip? {
+        didSet{
+            loadGlobalVariables()
+        }
+    }
         
     var placesClient : GMSPlacesClient!
+    
+    @IBOutlet weak var favoriteButton: UIButton!
     
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
@@ -121,8 +129,9 @@ class TripViewController : UIViewController {
     }
     
     @IBAction func favoriteButtonPressed(_ sender: Any) {
-        createTrip()
-        // TODO: change button text after pressing once
+        saveTrip(trip: trip!)
+        favoriteButton.isEnabled = false
+        favoriteButton.setTitle("Favorited!", for: .disabled)
     }
     
     // MARK: - Helper Methods
@@ -132,20 +141,16 @@ class TripViewController : UIViewController {
         arrivalDate = arrivalDate.replacingOccurrences(of: " ", with: "/")
     }
     
-    // MARK: - Database Methods
-    
-    func createTrip() {
-        let trip = Trip()
-        trip.arrivalDate = arrivalDate
-        trip.departDate = departDate
-        trip.destination = destination
-        trip.expediaURL = expediaURL
-        trip.kayakURL = kayakURL
-//        trip.origin = origin
-        trip.tripType = tripType
-//        trip.destPlaceID = destPlaceID
-        saveTrip(trip: trip)
+    func loadGlobalVariables() {
+        destination = trip!.destination
+        departDate = trip!.departDate
+        arrivalDate = trip!.arrivalDate
+        kayakURL = trip!.kayakURL
+        expediaURL = trip!.expediaURL
+        tripType = trip!.tripType
     }
+    
+    // MARK: - Database Methods
     
     func saveTrip(trip : Trip) {
         do {
