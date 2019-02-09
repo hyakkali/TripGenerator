@@ -54,6 +54,7 @@ class FavoriteTripsViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TripViewController
         destinationVC.trip = selectedTrip
+        destinationVC.hideFavoriteButton = true
     }
     
     func loadTrips() {

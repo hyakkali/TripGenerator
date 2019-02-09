@@ -16,12 +16,14 @@ class TripViewController : UIViewController {
     let realm = try! Realm()
     
     var destination : String = ""
+    var origin : String = ""
     var expediaURL : String = ""
     var kayakURL : String = ""
     var departDate : String = ""
     var arrivalDate : String = ""
     var tripType : String = ""
     var destPlaceID = ""
+    var hideFavoriteButton = false
     
     var trip : Trip? {
         didSet{
@@ -36,6 +38,7 @@ class TripViewController : UIViewController {
     @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
     @IBOutlet weak var tripTypeLabel: UILabel!
+    @IBOutlet weak var airportCodesLabel: UILabel!
     
     @IBOutlet weak var imageView1: UIImageView!
     @IBOutlet weak var imageView2: UIImageView!
@@ -48,6 +51,10 @@ class TripViewController : UIViewController {
         destinationLabel.text = destination
         
         tripTypeLabel.text = tripType
+        
+        airportCodesLabel.text = "\(origin) - \(findDestinationCode())"
+        
+        favoriteButton.isHidden = hideFavoriteButton
         
         if (tripType == "Round Trip") {
             tripDatesLabel.text = "\(departDate) - \(arrivalDate)"
@@ -135,6 +142,7 @@ class TripViewController : UIViewController {
     
     func loadGlobalVariables() {
         destination = trip!.destination
+        origin = trip!.origin
         departDate = trip!.departDate
         arrivalDate = trip!.arrivalDate
         kayakURL = trip!.kayakURL
@@ -154,6 +162,10 @@ class TripViewController : UIViewController {
         } catch {
             print("Error saving trip to Realm \(error)")
         }
+    }
+    
+    func findDestinationCode() -> String {
+        return (realm.objects(Place.self).filter("name = %@", destination).first?.airportCode)!
     }
     
 }
