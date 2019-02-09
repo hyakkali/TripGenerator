@@ -10,7 +10,6 @@
 		233C151E2202864700AA4322 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233C151D2202864700AA4322 /* AppDelegate.swift */; };
 		233C15202202864700AA4322 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233C151F2202864700AA4322 /* MainViewController.swift */; };
 		233C15232202864700AA4322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 233C15212202864700AA4322 /* Main.storyboard */; };
-		233C15262202864700AA4322 /* TripGenerator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */; };
 		233C15282202864900AA4322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 233C15272202864900AA4322 /* Assets.xcassets */; };
 		233C152B2202864900AA4322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 233C15292202864900AA4322 /* LaunchScreen.storyboard */; };
 		23739E24220E195E00F0C991 /* FavoriteTripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23739E23220E195E00F0C991 /* FavoriteTripsViewController.swift */; };
@@ -27,7 +26,6 @@
 		233C151D2202864700AA4322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		233C151F2202864700AA4322 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		233C15222202864700AA4322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		233C15252202864700AA4322 /* TripGenerator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TripGenerator.xcdatamodel; sourceTree = "<group>"; };
 		233C15272202864900AA4322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		233C152A2202864900AA4322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		233C152C2202864900AA4322 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,12 +74,11 @@
 			isa = PBXGroup;
 			children = (
 				237F4F1F2204AD27007307A9 /* Data */,
-				233C151D2202864700AA4322 /* AppDelegate.swift */,
 				23CC64CF22036B8800207CB1 /* Controller */,
 				23AFAB9C220386F4001A50A5 /* View */,
+				233C151D2202864700AA4322 /* AppDelegate.swift */,
 				233C15272202864900AA4322 /* Assets.xcassets */,
 				233C152C2202864900AA4322 /* Info.plist */,
-				233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */,
 			);
 			path = TripGenerator;
 			sourceTree = "<group>";
@@ -242,9 +239,10 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -256,6 +254,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -263,7 +262,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		846594FFC879D52B160C2DA3 /* [CP] Copy Pods Resources */ = {
@@ -274,7 +273,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
@@ -287,7 +286,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TripGenerator/Pods-TripGenerator-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -304,7 +303,6 @@
 				23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */,
 				237F4F232204ADC1007307A9 /* Place.swift in Sources */,
 				233C151E2202864700AA4322 /* AppDelegate.swift in Sources */,
-				233C15262202864700AA4322 /* TripGenerator.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,19 +504,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				233C15252202864700AA4322 /* TripGenerator.xcdatamodel */,
-			);
-			currentVersion = 233C15252202864700AA4322 /* TripGenerator.xcdatamodel */;
-			path = TripGenerator.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 233C15122202864700AA4322 /* Project object */;
 }

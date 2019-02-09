@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
-class FavoriteTripsViewController: UITableViewController {
+class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     let realm = try! Realm()
     
@@ -20,9 +21,10 @@ class FavoriteTripsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Register the custom trip cell
         self.tableView.register(UINib(nibName: "TripCell", bundle: nil), forCellReuseIdentifier: "customTripCell")
+        
         self.tableView.rowHeight = 100.0
-//        self.tableView.estimatedRowHeight = 200.0
         
         loadTrips()
     }
@@ -31,18 +33,17 @@ class FavoriteTripsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customTripCell", for: indexPath) as! CustomTripCell
+        
+        cell.delegate = self
 
         if let trip = tripArray?[indexPath.row] {
             
             cell.destinationLabel.text = trip.destination
             cell.airportCodesLabel.text = "\(trip.origin) - \(findDestAirportCode(destination: trip.destination))"
             cell.tripTypeLabel.text = trip.tripType
+            
+            cell.tripDatesLabel.text = trip.tripType == "Round Trip" ? "\(trip.departDate) - \(trip.arrivalDate)" : trip.departDate
 
-            if trip.tripType == "Round Trip" {
-                cell.tripDatesLabel.text = "\(trip.departDate) - \(trip.arrivalDate)"
-            } else {
-                cell.tripDatesLabel.text = trip.departDate
-            }
         }
         return cell
     }
@@ -64,12 +65,46 @@ class FavoriteTripsViewController: UITableViewController {
         destinationVC.hideFavoriteButton = true
     }
     
+    // MARK: - Swipe Tableview Delegate Methods
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            if let trip = self.tripArray?[indexPath.row] {
+                self.deleteTrip(trip: trip)
+            }
+        }
+        
+        deleteAction.image = UIImage(named: "delete-icon")
+        
+        return [deleteAction]
+        
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+//        options.expansionStyle = .destructive
+        options.transitionStyle = .drag
+        return options
+    }
+    
     // MARK: - Database Methods
     
     func loadTrips() {
         tripArray = realm.objects(Trip.self)
         
         tableView.reloadData()
+    }
+    
+    func deleteTrip(trip : Trip) {
+        do {
+            try realm.write {
+                realm.delete(trip)
+            }
+        } catch {
+            print("Error deleting trip")
+        }
     }
     
     func findDestAirportCode(destination : String) -> String {

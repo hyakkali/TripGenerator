@@ -13,5 +13,6 @@ target 'TripGenerator' do
   pod 'GooglePlaces'
   pod 'GoogleMaps'
   pod 'SwipeCellKit'
+  pod 'FaveButton'
 
 end

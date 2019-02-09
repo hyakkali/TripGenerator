@@ -3,6 +3,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
+  - FaveButton (3.2.0)
   - GoogleMaps (3.0.2):
     - GoogleMaps/Maps (= 3.0.2)
   - GoogleMaps/Base (3.0.2)
@@ -21,6 +22,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - FaveButton
   - GoogleMaps
   - GooglePlaces
   - RealmSwift
@@ -30,6 +32,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - FaveButton
     - GoogleMaps
     - GooglePlaces
     - Realm
@@ -49,6 +52,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  FaveButton: c818ab3d04d22a7615e93f08c7b35932acb3f735
   GoogleMaps: 941cd655e009b4d8e42df19a3d749bc3fccec973
   GooglePlaces: c086e0055dc5f0177d7c9d65fc77a1734f9a4825
   Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
@@ -56,6 +60,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   SwipeCellKit: 30fd6a4f8a8b8ac864ea389c8b4c8bac5ba5471a
 
-PODFILE CHECKSUM: 0cfde4f56ca931c401b24552ed2f975fe836ebf2
+PODFILE CHECKSUM: 24bb13865e88db0d43dcabc50608d34bbaf5894d
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0
