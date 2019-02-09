@@ -20,21 +20,28 @@ class FavoriteTripsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.register(UINib(nibName: "TripCell", bundle: nil), forCellReuseIdentifier: "customTripCell")
+        self.tableView.rowHeight = 100.0
+//        self.tableView.estimatedRowHeight = 200.0
+        
         loadTrips()
     }
 
     // MARK: - Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TripCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customTripCell", for: indexPath) as! CustomTripCell
 
         if let trip = tripArray?[indexPath.row] {
+            
+            cell.destinationLabel.text = trip.destination
+            cell.airportCodesLabel.text = "\(trip.origin) - \(findDestAirportCode(destination: trip.destination))"
+            cell.tripTypeLabel.text = trip.tripType
+
             if trip.tripType == "Round Trip" {
-                let cellText = "Round Trip from \(trip.origin) to \(trip.destination) \(trip.departDate)-\(trip.arrivalDate)"
-                cell.textLabel?.text = cellText
+                cell.tripDatesLabel.text = "\(trip.departDate) - \(trip.arrivalDate)"
             } else {
-                let cellText = "One Way from \(trip.origin) to \(trip.destination) on \(trip.departDate)"
-                cell.textLabel?.text = cellText
+                cell.tripDatesLabel.text = trip.departDate
             }
         }
         return cell
@@ -57,10 +64,16 @@ class FavoriteTripsViewController: UITableViewController {
         destinationVC.hideFavoriteButton = true
     }
     
+    // MARK: - Database Methods
+    
     func loadTrips() {
         tripArray = realm.objects(Trip.self)
         
         tableView.reloadData()
+    }
+    
+    func findDestAirportCode(destination : String) -> String {
+        return (realm.objects(Place.self).filter("name = %@", destination).first?.airportCode)!
     }
 
 }

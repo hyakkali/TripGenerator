@@ -12,5 +12,6 @@ target 'TripGenerator' do
   pod 'RealmSwift'
   pod 'GooglePlaces'
   pod 'GoogleMaps'
+  pod 'SwipeCellKit'
 
 end

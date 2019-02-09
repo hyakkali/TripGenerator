@@ -16,6 +16,8 @@
 		23739E24220E195E00F0C991 /* FavoriteTripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23739E23220E195E00F0C991 /* FavoriteTripsViewController.swift */; };
 		237F4F212204AD35007307A9 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F4F202204AD35007307A9 /* Trip.swift */; };
 		237F4F232204ADC1007307A9 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F4F222204ADC1007307A9 /* Place.swift */; };
+		23935962220F705B001B8E40 /* CustomTripCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23935961220F705B001B8E40 /* CustomTripCell.swift */; };
+		23935964220F7092001B8E40 /* TripCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23935963220F7092001B8E40 /* TripCell.xib */; };
 		23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC64CD2203636500207CB1 /* TripViewController.swift */; };
 		6AB66D2C8734377AD4D6B61B /* Pods_TripGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */; };
 /* End PBXBuildFile section */
@@ -32,6 +34,8 @@
 		23739E23220E195E00F0C991 /* FavoriteTripsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTripsViewController.swift; sourceTree = "<group>"; };
 		237F4F202204AD35007307A9 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		237F4F222204ADC1007307A9 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		23935961220F705B001B8E40 /* CustomTripCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTripCell.swift; sourceTree = "<group>"; };
+		23935963220F7092001B8E40 /* TripCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TripCell.xib; sourceTree = "<group>"; };
 		23CC64CD2203636500207CB1 /* TripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
 		23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		770078469DB390612866E83C /* Pods-TripGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripGenerator.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator.release.xcconfig"; sourceTree = "<group>"; };
@@ -91,9 +95,19 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		23935960220F7049001B8E40 /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
+				23935961220F705B001B8E40 /* CustomTripCell.swift */,
+				23935963220F7092001B8E40 /* TripCell.xib */,
+			);
+			path = "Custom Cell";
+			sourceTree = "<group>";
+		};
 		23AFAB9C220386F4001A50A5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				23935960220F7049001B8E40 /* Custom Cell */,
 				233C15212202864700AA4322 /* Main.storyboard */,
 				233C15292202864900AA4322 /* LaunchScreen.storyboard */,
 			);
@@ -189,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				233C152B2202864900AA4322 /* LaunchScreen.storyboard in Resources */,
+				23935964220F7092001B8E40 /* TripCell.xib in Resources */,
 				233C15282202864900AA4322 /* Assets.xcassets in Resources */,
 				233C15232202864700AA4322 /* Main.storyboard in Resources */,
 			);
@@ -233,6 +248,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -243,6 +259,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -281,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				237F4F212204AD35007307A9 /* Trip.swift in Sources */,
+				23935962220F705B001B8E40 /* CustomTripCell.swift in Sources */,
 				23739E24220E195E00F0C991 /* FavoriteTripsViewController.swift in Sources */,
 				233C15202202864700AA4322 /* MainViewController.swift in Sources */,
 				23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */,

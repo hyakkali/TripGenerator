@@ -109,7 +109,7 @@
             </objects>
             <point key="canvasLocation" x="733.60000000000002" y="26.53673163418291"/>
         </scene>
-        <!--Favorite Trips-->
+        <!--Favorited Trips-->
         <scene sceneID="CtB-5s-9qY">
             <objects>
                 <tableViewController id="TpI-RI-xsl" customClass="FavoriteTripsViewController" customModule="TripGenerator" customModuleProvider="target" sceneMemberID="viewController">
@@ -133,7 +133,7 @@
                             <outlet property="delegate" destination="TpI-RI-xsl" id="Ez2-gO-Bjz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Favorite Trips" id="ZOa-8d-13p"/>
+                    <navigationItem key="navigationItem" title="Favorited Trips" id="ZOa-8d-13p"/>
                     <connections>
                         <segue destination="UhS-mX-KZj" kind="show" identifier="goToTripDetails" id="paA-K3-6b4"/>
                     </connections>
@@ -178,6 +178,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Cd-pU-lLX">
+                                <rect key="frame" x="222" y="222" width="100" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="View on Kayak"/>
+                                <connections>
+                                    <action selector="kayakButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="ipw-sE-ccV"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxA-QA-Cyi">
                                 <rect key="frame" x="41" y="273" width="124" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -203,19 +211,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1N-wg-Po6">
-                                <rect key="frame" x="79" y="222" width="55" height="30"/>
+                                <rect key="frame" x="47" y="222" width="113" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Expedia"/>
+                                <state key="normal" title="View on Expedia"/>
                                 <connections>
                                     <action selector="expediaButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="1KK-Xp-nnU"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Cd-pU-lLX">
-                                <rect key="frame" x="255" y="222" width="41" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Kayak"/>
-                                <connections>
-                                    <action selector="kayakButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="ipw-sE-ccV"/>
                                 </connections>
                             </button>
                         </subviews>
