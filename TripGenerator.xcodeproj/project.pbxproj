@@ -13,6 +13,7 @@
 		233C15262202864700AA4322 /* TripGenerator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 233C15242202864700AA4322 /* TripGenerator.xcdatamodeld */; };
 		233C15282202864900AA4322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 233C15272202864900AA4322 /* Assets.xcassets */; };
 		233C152B2202864900AA4322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 233C15292202864900AA4322 /* LaunchScreen.storyboard */; };
+		23739E24220E195E00F0C991 /* FavoriteTripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23739E23220E195E00F0C991 /* FavoriteTripsViewController.swift */; };
 		237F4F212204AD35007307A9 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F4F202204AD35007307A9 /* Trip.swift */; };
 		237F4F232204ADC1007307A9 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F4F222204ADC1007307A9 /* Place.swift */; };
 		23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC64CD2203636500207CB1 /* TripViewController.swift */; };
@@ -28,6 +29,7 @@
 		233C15272202864900AA4322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		233C152A2202864900AA4322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		233C152C2202864900AA4322 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		23739E23220E195E00F0C991 /* FavoriteTripsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTripsViewController.swift; sourceTree = "<group>"; };
 		237F4F202204AD35007307A9 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		237F4F222204ADC1007307A9 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		23CC64CD2203636500207CB1 /* TripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			children = (
 				233C151F2202864700AA4322 /* MainViewController.swift */,
 				23CC64CD2203636500207CB1 /* TripViewController.swift */,
+				23739E23220E195E00F0C991 /* FavoriteTripsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				237F4F212204AD35007307A9 /* Trip.swift in Sources */,
+				23739E24220E195E00F0C991 /* FavoriteTripsViewController.swift in Sources */,
 				233C15202202864700AA4322 /* MainViewController.swift in Sources */,
 				23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */,
 				237F4F232204ADC1007307A9 /* Place.swift in Sources */,

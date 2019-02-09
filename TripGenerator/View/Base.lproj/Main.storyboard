@@ -35,7 +35,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4w-Oq-abB">
-                                <rect key="frame" x="155" y="490" width="64" height="30"/>
+                                <rect key="frame" x="71" y="490" width="64" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Generate"/>
                                 <connections>
@@ -63,6 +63,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1C-ZZ-Xk9">
+                                <rect key="frame" x="236" y="490" width="59" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="My Trips"/>
+                                <connections>
+                                    <action selector="tripsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fxB-CO-UpP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -73,11 +81,41 @@
                         <outlet property="originTextField" destination="MIC-4a-U0N" id="rUB-gq-R5l"/>
                         <outlet property="tripTypeTextField" destination="dah-v0-UIZ" id="68o-Dc-dVn"/>
                         <segue destination="UhS-mX-KZj" kind="show" identifier="goToTripPage" id="CfF-HU-qzq"/>
+                        <segue destination="TpI-RI-xsl" kind="show" identifier="goToFavTrips" id="ozG-uY-KU3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="733.60000000000002" y="26.53673163418291"/>
+        </scene>
+        <!--Favorite Trips-->
+        <scene sceneID="CtB-5s-9qY">
+            <objects>
+                <tableViewController id="TpI-RI-xsl" customClass="FavoriteTripsViewController" customModule="TripGenerator" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="PZU-93-UkW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TripCell" id="g8N-Tz-OII">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="g8N-Tz-OII" id="bwv-Kr-8Rs">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="TpI-RI-xsl" id="ufF-oc-CcD"/>
+                            <outlet property="delegate" destination="TpI-RI-xsl" id="Ez2-gO-Bjz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Favorite Trips" id="ZOa-8d-13p"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N1W-zy-aOT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1588" y="427"/>
         </scene>
         <!--Trip View Controller-->
         <scene sceneID="Uay-R3-aSf">
@@ -158,19 +196,19 @@
                     </view>
                     <navigationItem key="navigationItem" id="2El-ub-338"/>
                     <connections>
+                        <outlet property="destinationLabel" destination="vNy-dv-LdN" id="k7O-4x-Mlk"/>
                         <outlet property="favoriteButton" destination="ecp-nH-kaz" id="D39-ea-cKd"/>
                         <outlet property="imageView1" destination="zxA-QA-Cyi" id="Huh-hM-jdd"/>
                         <outlet property="imageView2" destination="jcl-OU-hdv" id="cDw-eE-fOZ"/>
                         <outlet property="imageView3" destination="BVk-8E-Mp8" id="yyY-P3-hxY"/>
                         <outlet property="imageView4" destination="UNy-Rw-DjW" id="Nxv-1H-lJN"/>
-                        <outlet property="locationLabel" destination="vNy-dv-LdN" id="M0J-9J-SJc"/>
                         <outlet property="tripDatesLabel" destination="NG0-sa-Bar" id="U39-U5-Kow"/>
                         <outlet property="tripTypeLabel" destination="uio-nz-Daf" id="g1k-6r-ykt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lZY-zx-C4O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1460" y="26.53673163418291"/>
+            <point key="canvasLocation" x="1588" y="-269"/>
         </scene>
     </scenes>
 </document>

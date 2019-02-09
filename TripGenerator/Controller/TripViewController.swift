@@ -33,7 +33,7 @@ class TripViewController : UIViewController {
     
     @IBOutlet weak var favoriteButton: UIButton!
     
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
     @IBOutlet weak var tripTypeLabel: UILabel!
     
@@ -45,9 +45,7 @@ class TripViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationLabel.text = destination
-                
-        formatDates()
+        destinationLabel.text = destination
         
         tripTypeLabel.text = tripType
         
@@ -108,7 +106,6 @@ class TripViewController : UIViewController {
                 }
             })
     }
-
     
     // MARK: - Buttons
     
@@ -135,11 +132,6 @@ class TripViewController : UIViewController {
     }
     
     // MARK: - Helper Methods
-    
-    func formatDates() {
-        departDate = departDate.replacingOccurrences(of: " ", with: "/")
-        arrivalDate = arrivalDate.replacingOccurrences(of: " ", with: "/")
-    }
     
     func loadGlobalVariables() {
         destination = trip!.destination

@@ -99,7 +99,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         self.view.endEditing(true)
     }
     
-    // MARK: - Generate Trip
+    // MARK: - Buttons
     
     @IBAction func generateTrip(_ sender: Any) {
         
@@ -140,6 +140,10 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     }
     
+    @IBAction func tripsButtonPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "goToFavTrips", sender: self)
+    }
+
     func getAttractions() {
         Alamofire.request(PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY , method: .get).responseJSON { (response) in
             if response.result.isSuccess {
@@ -168,15 +172,11 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! TripViewController
-//        destinationVC.destination = destination
-//        destinationVC.expediaURL = expedia_url
-//        destinationVC.kayakURL = kayak_url
-//        destinationVC.departDate = departDate
-//        destinationVC.arrivalDate = arrivalDate
-//        destinationVC.tripType = tripTypeTextField.text!
-        destinationVC.trip = createTrip()
-        destinationVC.destPlaceID = destPlaceID
+        if (segue.identifier == "goToTripPage") {
+            let destinationVC = segue.destination as! TripViewController
+            destinationVC.trip = createTrip()
+            destinationVC.destPlaceID = destPlaceID
+        }
     }
     
     // MARK: - Date Functions
@@ -325,8 +325,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     func createTrip() -> Trip {
         let trip = Trip()
-        trip.arrivalDate = arrivalDate
-        trip.departDate = departDate
+        trip.arrivalDate = arrivalDate.replacingOccurrences(of: " ", with: "/")
+        trip.departDate = departDate.replacingOccurrences(of: " ", with: "/")
         trip.destination = destination
         trip.expediaURL = expedia_url
         trip.kayakURL = kayak_url
