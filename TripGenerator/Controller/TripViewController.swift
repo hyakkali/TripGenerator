@@ -140,6 +140,7 @@ class TripViewController : UIViewController {
         kayakURL = trip!.kayakURL
         expediaURL = trip!.expediaURL
         tripType = trip!.tripType
+        destPlaceID = trip!.destPlaceID
     }
     
     // MARK: - Database Methods

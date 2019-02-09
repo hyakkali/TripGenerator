@@ -15,8 +15,8 @@ class FavoriteTripsViewController: UITableViewController {
     
     var tripArray : Results<Trip>?
     
-    let array = ["hey", "hello", "lmao"]
-
+    var selectedTrip : Trip?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,9 +29,13 @@ class FavoriteTripsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TripCell", for: indexPath)
 
         if let trip = tripArray?[indexPath.row] {
-            cell.textLabel?.text = trip.destination + trip.departDate + trip.arrivalDate
-        } else {
-            cell.textLabel?.text = "No Trips Have Been Favorited Yet"
+            if trip.tripType == "Round Trip" {
+                let cellText = "Round Trip from \(trip.origin) to \(trip.destination) \(trip.departDate)-\(trip.arrivalDate)"
+                cell.textLabel?.text = cellText
+            } else {
+                let cellText = "One Way from \(trip.origin) to \(trip.destination) on \(trip.departDate)"
+                cell.textLabel?.text = cellText
+            }
         }
         return cell
     }
@@ -43,7 +47,13 @@ class FavoriteTripsViewController: UITableViewController {
     // MARK: - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("clicked!")
+        selectedTrip = tripArray?[indexPath.row]
+        self.performSegue(withIdentifier: "goToTripDetails", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! TripViewController
+        destinationVC.trip = selectedTrip
     }
     
     func loadTrips() {

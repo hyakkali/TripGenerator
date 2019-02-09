@@ -17,4 +17,5 @@ class Trip : Object {
     @objc dynamic var tripType : String = ""
     @objc dynamic var expediaURL : String = ""
     @objc dynamic var kayakURL : String = ""
+    @objc dynamic var destPlaceID : String = ""
 }

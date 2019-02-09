@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         GMSPlacesClient.provideAPIKey("AIzaSyBBd2UH06e5_Ihk9RumEDKyhph4UhyP5ys")
         
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        
         do {
             _ = try Realm()
         } catch {

@@ -21,7 +21,6 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     @IBOutlet weak var greetingLabel: UILabel!
     
-    // TODO: make origin a place object as well to compare
     let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
     let tripTypeList = ["Round Trip", "One Way"]
     let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh City", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
@@ -37,16 +36,14 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     // URL to get valid airport code
     let AIRPORT_URL = "https://iatacodes.org/api/v6/autocomplete?api_key=9e145a85-8a4f-4f41-aaf3-e807721840ff&query="
     let PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
-    let PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo?"
     let KEY = "&key="
-    let PHOTO_SIZE = "&maxheight=400&maxwidth=400&photoreference="
     let PLACES_API_KEY = "AIzaSyB8AVDjX7tbuZqTyOQZuwKcur7MZM6QE0M"
     var expedia_url = ""
     var kayak_url = ""
     var departDate = ""
     var arrivalDate = ""
     var origin = "RDU"
-    var destination = ""
+    var destination = "Boston"
     var destAirportCode = ""
     var destPlaceID = ""
 
@@ -106,7 +103,10 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let number : Int = Int.random(in: 0 ..< cityList.count)
         destination = cityList[number]
         
-        // TODO: check if destination is equal to origin
+        while ((origin == "BOS" && destination == "Boston") || ((origin == "JFK" || origin == "EWR" || origin == "LGA") && destination == "New York") || (origin == "SFO" && destination == "San Francisco")) {
+            let number : Int = Int.random(in: 0 ..< cityList.count)
+            destination = cityList[number]
+        }
         
         // check if destination is an attribute on any places
         let destinationData = realm.objects(Place.self).filter("name = %@", destination)
@@ -114,7 +114,6 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         if (!destinationData.isEmpty) { // if place exists in database
             destAirportCode = (destinationData.first?.airportCode)!
             getAttractions()
-//            generateTripDetails()
         } else {
             Alamofire.request(AIRPORT_URL + formatCityName(city: destination), method: .get).responseJSON { (response) in
                 if response.result.isSuccess {
@@ -175,7 +174,6 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         if (segue.identifier == "goToTripPage") {
             let destinationVC = segue.destination as! TripViewController
             destinationVC.trip = createTrip()
-            destinationVC.destPlaceID = destPlaceID
         }
     }
     
@@ -328,11 +326,11 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         trip.arrivalDate = arrivalDate.replacingOccurrences(of: " ", with: "/")
         trip.departDate = departDate.replacingOccurrences(of: " ", with: "/")
         trip.destination = destination
+        trip.origin = origin
         trip.expediaURL = expedia_url
         trip.kayakURL = kayak_url
-        //        trip.origin = origin
         trip.tripType = tripTypeTextField.text!
-        //        trip.destPlaceID = destPlaceID
+        trip.destPlaceID = destPlaceID
         return trip
     }
 
