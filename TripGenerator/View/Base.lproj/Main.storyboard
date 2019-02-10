@@ -178,6 +178,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1N-wg-Po6">
+                                <rect key="frame" x="47" y="222" width="113" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="View on Expedia"/>
+                                <connections>
+                                    <action selector="expediaButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="1KK-Xp-nnU"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Cd-pU-lLX">
                                 <rect key="frame" x="222" y="222" width="100" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -202,22 +210,6 @@
                                 <rect key="frame" x="210" y="273" width="124" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecp-nH-kaz">
-                                <rect key="frame" x="128" y="603" width="118" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Favorite This Trip"/>
-                                <connections>
-                                    <action selector="favoriteButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="9vj-uZ-NIp"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1N-wg-Po6">
-                                <rect key="frame" x="47" y="222" width="113" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="View on Expedia"/>
-                                <connections>
-                                    <action selector="expediaButtonPressed:" destination="UhS-mX-KZj" eventType="touchUpInside" id="1KK-Xp-nnU"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.89598537310000004" green="0.89598537310000004" blue="0.89598537310000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="IYM-n6-Vfv"/>
@@ -226,7 +218,6 @@
                     <connections>
                         <outlet property="airportCodesLabel" destination="9xi-vS-lHc" id="lYN-9m-ckT"/>
                         <outlet property="destinationLabel" destination="vNy-dv-LdN" id="k7O-4x-Mlk"/>
-                        <outlet property="favoriteButton" destination="ecp-nH-kaz" id="D39-ea-cKd"/>
                         <outlet property="imageView1" destination="zxA-QA-Cyi" id="Huh-hM-jdd"/>
                         <outlet property="imageView2" destination="jcl-OU-hdv" id="cDw-eE-fOZ"/>
                         <outlet property="imageView3" destination="BVk-8E-Mp8" id="yyY-P3-hxY"/>

@@ -10,9 +10,10 @@ import UIKit
 import SafariServices
 import GooglePlaces
 import RealmSwift
+import FaveButton
 
-class TripViewController : UIViewController {
-    
+class TripViewController : UIViewController, FaveButtonDelegate {
+
     let realm = try! Realm()
     
     var destination : String = ""
@@ -23,7 +24,7 @@ class TripViewController : UIViewController {
     var arrivalDate : String = ""
     var tripType : String = ""
     var destPlaceID = ""
-    var hideFavoriteButton = false
+    var isFavorite = false
     
     var trip : Trip? {
         didSet{
@@ -32,8 +33,6 @@ class TripViewController : UIViewController {
     }
         
     var placesClient : GMSPlacesClient!
-    
-    @IBOutlet weak var favoriteButton: UIButton!
     
     @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
@@ -54,7 +53,7 @@ class TripViewController : UIViewController {
         
         airportCodesLabel.text = "\(origin) - \(findDestinationCode())"
         
-        favoriteButton.isHidden = hideFavoriteButton
+        createFaveButton()
         
         if (tripType == "Round Trip") {
             tripDatesLabel.text = "\(departDate) - \(arrivalDate)"
@@ -114,6 +113,29 @@ class TripViewController : UIViewController {
             })
     }
     
+    // MARK: - FaveButton Delegate Methods
+    
+    func createFaveButton() {
+        let faveButton = FaveButton(
+            frame: CGRect(x: 300, y: 92, width: 30, height: 30),
+            faveIconNormal: UIImage(named: "heart")
+        )
+        
+        faveButton.delegate = self
+        view.addSubview(faveButton)
+        
+        faveButton.isSelected = isFavorite
+        faveButton.isUserInteractionEnabled = !isFavorite
+    }
+    
+    func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
+        print(selected)
+        if selected {
+            faveButton.isUserInteractionEnabled = false
+            saveTrip(trip: trip!)
+        }
+    }
+    
     // MARK: - Buttons
     
     @IBAction func expediaButtonPressed(_ sender: Any) {
@@ -130,12 +152,6 @@ class TripViewController : UIViewController {
             let svc = SFSafariViewController(url: url)
             present(svc, animated: true, completion: nil)
         }
-    }
-    
-    @IBAction func favoriteButtonPressed(_ sender: Any) {
-        saveTrip(trip: trip!)
-        favoriteButton.isEnabled = false
-        favoriteButton.setTitle("Favorited!", for: .disabled)
     }
     
     // MARK: - Helper Methods
@@ -161,6 +177,17 @@ class TripViewController : UIViewController {
             }
         } catch {
             print("Error saving trip to Realm \(error)")
+        }
+    }
+    
+    func deleteTrip(trip : Trip) {
+        do {
+            try realm.write {
+                realm.delete(trip)
+                print("trip deleted!")
+            }
+        } catch {
+            print("Error deleting trip from Realm \(error)")
         }
     }
     

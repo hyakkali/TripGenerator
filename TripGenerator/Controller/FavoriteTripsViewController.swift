@@ -62,7 +62,7 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TripViewController
         destinationVC.trip = selectedTrip
-        destinationVC.hideFavoriteButton = true
+        destinationVC.isFavorite = true
     }
     
     // MARK: - Swipe Tableview Delegate Methods
@@ -84,8 +84,7 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
         var options = SwipeOptions()
-//        options.expansionStyle = .destructive
-        options.transitionStyle = .drag
+        options.expansionStyle = .destructiveAfterFill
         return options
     }
     
