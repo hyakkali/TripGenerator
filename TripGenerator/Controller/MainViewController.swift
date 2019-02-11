@@ -34,6 +34,11 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         "Washington D.C." : "IAD"
     ]
     
+    let noPlaceIDDict : [String : String] = [
+        "Barcelona" : "Barcelona, Spain",
+        "Mecca" : "Mecca, Saudi Arabia"
+    ]
+    
     // URL to get valid airport code
     let AIRPORT_URL = "https://iatacodes.org/api/v6/autocomplete?api_key=9e145a85-8a4f-4f41-aaf3-e807721840ff&query="
     let PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
@@ -44,7 +49,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var departDate = ""
     var arrivalDate = ""
     var origin = "RDU"
-    var destination = "Boston"
+    var destination = ""
     var destAirportCode = ""
     var destPlaceID = ""
 
@@ -112,7 +117,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         let number : Int = Int.random(in: 0 ..< cityList.count)
         destination = cityList[number]
-        
+
         while ((origin == "BOS" && destination == "Boston") || ((origin == "JFK" || origin == "EWR" || origin == "LGA") && destination == "New York") || (origin == "SFO" && destination == "San Francisco")) {
             let number : Int = Int.random(in: 0 ..< cityList.count)
             destination = cityList[number]
@@ -154,7 +159,11 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
 
     func getAttractions() {
-        Alamofire.request(PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY , method: .get).responseJSON { (response) in
+        var url = PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY
+        if destination == "Barcelona" || destination == "Mecca" {
+            url = PLACES_URL + formatCityName(city: noPlaceIDDict[destination]!) + KEY + PLACES_API_KEY
+        }
+        Alamofire.request(url , method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 print("got places data!")
                 let body : JSON = JSON(response.result.value!)
