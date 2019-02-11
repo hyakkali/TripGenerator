@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 import RealmSwift
+import ChameleonFramework
 
 class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -50,8 +51,17 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = FlatWhite()
+        
         setupPickerViews()
         displayGreeting()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
+        navBar.barTintColor = HexColor("#42eef4")
+        navBar.tintColor = ContrastColorOf(HexColor("#42eef4")!, returnFlat: true)
+        navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(HexColor("#42eef4")!, returnFlat: true)]
     }
     
     func setupPickerViews() {
