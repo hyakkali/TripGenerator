@@ -24,7 +24,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
     let tripTypeList = ["Round Trip", "One Way"]
-    let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh City", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
+    let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
     
     let noAirportDict : [String : String] = [
         "Mecca" : "JED",
@@ -36,7 +36,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     let noPlaceIDDict : [String : String] = [
         "Barcelona" : "Barcelona, Spain",
-        "Mecca" : "Mecca, Saudi Arabia"
+        "Mecca" : "Mecca, Saudi Arabia",
+        "Ho Chi Minh" : "Ho Chi Minh City"
     ]
     
     // URL to get valid airport code
@@ -160,7 +161,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
 
     func getAttractions() {
         var url = PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY
-        if destination == "Barcelona" || destination == "Mecca" {
+        if destination == "Barcelona" || destination == "Mecca" || destination == "Ho Chi Minh" {
             url = PLACES_URL + formatCityName(city: noPlaceIDDict[destination]!) + KEY + PLACES_API_KEY
         }
         Alamofire.request(url , method: .get).responseJSON { (response) in
