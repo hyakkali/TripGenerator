@@ -7,15 +7,14 @@
 //
 
 import Foundation
-import RealmSwift
 
-class Trip : Object {
-    @objc dynamic var origin : String = ""
-    @objc dynamic var destination : String = ""
-    @objc dynamic var departDate : String = ""
-    @objc dynamic var arrivalDate : String = ""
-    @objc dynamic var tripType : String = ""
-    @objc dynamic var expediaURL : String = ""
-    @objc dynamic var kayakURL : String = ""
-    @objc dynamic var destPlaceID : String = ""
+class Trip {
+    var origin : String = ""
+    var destination : String = ""
+    var departDate : String = ""
+    var arrivalDate : String = ""
+    var tripType : String = ""
+    var expediaURL : String = ""
+    var kayakURL : String = ""
+    var destPlaceID : String = ""
 }

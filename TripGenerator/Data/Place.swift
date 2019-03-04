@@ -7,13 +7,9 @@
 //
 
 import Foundation
-import RealmSwift
 
-class Place : Object {
-    @objc dynamic var name : String = ""
-    @objc dynamic var airportCode : String = ""
-    
-    override static func primaryKey() -> String? {
-        return "name"
-    }
+class Place {
+    var name : String = ""
+    var airportCode : String = ""
+    var country : String = ""
 }

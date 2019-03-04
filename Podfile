@@ -14,5 +14,8 @@ target 'TripGenerator' do
   pod 'GoogleMaps'
   pod 'SwipeCellKit'
   pod 'FaveButton'
+  pod 'Firebase'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 
 end

@@ -9,13 +9,12 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
-import RealmSwift
 import ChameleonFramework
+import Firebase
 
 class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    let realm = try! Realm()
-    var placeArray : Results<Place>?
+    var placesArray = [Place]()
     
     @IBOutlet weak var originTextField: UITextField!
     @IBOutlet weak var tripTypeTextField: UITextField!
@@ -24,15 +23,6 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
     let tripTypeList = ["Round Trip", "One Way"]
-    let cityList = ["Paris", "London", "Bangkok", "Singapore", "New York", "Kuala Lumpur", "Hong Kong", "Dubai", "Istanbul", "Rome", "Shanghai", "Los Angeles", "Las Vegas", "Miami", "Toronto", "Barcelona", "Dublin", "Amsterdam", "Moscow", "Cairo", "Prague", "Vienna", "Madrid", "San Francisco", "Vancouver", "Budapest", "Rio de Janeiro", "Berlin", "Tokyo", "Mexico City", "Buenos Aires", "St. Petersburg", "Seoul", "Athens", "Jerusalem", "Seattle", "Delhi", "Sydney", "Mumbai", "Munich", "Venice", "Florence", "Beijing", "Cape Town", "Washington D.C.", "Montreal", "Atlanta", "Boston", "Philadelphia", "Chicago", "San Diego", "Stockholm", "Cancun", "Warsaw", "Sharm el-Sheikh", "Dallas", "Ho Chi Minh", "Milan", "Oslo", "Lisbon", "Punta Cana", "Johannesburg", "Antalya", "Mecca", "Macau", "Pattaya", "Guangzhou", "Kiev", "Shenzhen", "Bucharest", "Taipei", "Orlando", "Brussels", "Chennai", "Marrakesh", "Phuket", "Edirne", "Bali", "Copenhagen", "Sao Paulo", "Agra", "Varna", "Riyadh", "Jakarta", "Auckland", "Honolulu", "Edinburgh", "Wellington", "New Orleans", "Petra", "Melbourne", "Luxor", "Hanoi", "Manila", "Houston", "Phnom Penh", "Zurich", "Lima", "Santiago", "Bogota"]
-    
-    let noAirportDict : [String : String] = [
-        "Mecca" : "JED",
-        "Edirne" : "IST",
-        "Petra" : "AMM",
-        "Jerusalem" : "TLV",
-        "Washington D.C." : "IAD"
-    ]
     
     let noPlaceIDDict : [String : String] = [
         "Barcelona" : "Barcelona, Spain",
@@ -61,6 +51,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         setupPickerViews()
         displayGreeting()
+        loadPlaces()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,42 +108,16 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     @IBAction func generateTrip(_ sender: Any) {
         
-        let number : Int = Int.random(in: 0 ..< cityList.count)
-        destination = cityList[number]
+        let number : Int = Int.random(in: 0 ..< placesArray.count)
+        destination = placesArray[number].name
 
         while ((origin == "BOS" && destination == "Boston") || ((origin == "JFK" || origin == "EWR" || origin == "LGA") && destination == "New York") || (origin == "SFO" && destination == "San Francisco")) {
-            let number : Int = Int.random(in: 0 ..< cityList.count)
-            destination = cityList[number]
+            let number : Int = Int.random(in: 0 ..< placesArray.count)
+            destination = placesArray[number].name
         }
         
-        // check if destination is an attribute on any places
-        let destinationData = realm.objects(Place.self).filter("name = %@", destination)
-        
-        if (!destinationData.isEmpty) { // if place exists in database
-            destAirportCode = (destinationData.first?.airportCode)!
-            getAttractions()
-        } else {
-            Alamofire.request(AIRPORT_URL + formatCityName(city: destination), method: .get).responseJSON { (response) in
-                if response.result.isSuccess {
-                    print("Got airport data!")
-                    let body : JSON = JSON(response.result.value!)
-                    self.destAirportCode = body["response"]["airports_by_cities"][0]["code"].stringValue
-                    print(self.destination)
-                    print(self.destAirportCode)
-                    
-                    // if airport code empty, check dict to get the right airport code
-                    if self.destAirportCode == "" {
-                        self.destAirportCode = self.noAirportDict[self.destination]!
-                    }
-                    
-                    self.createPlace()
-                    self.getAttractions()
-                    
-                } else {
-                    print("Error \(response.result.error!)")
-                }
-            }
-        }
+        destAirportCode = findPlace(location: destination)
+        self.getAttractions()
     
     }
     
@@ -192,8 +158,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "goToTripPage") {
-            let destinationVC = segue.destination as! TripViewController
-            destinationVC.trip = createTrip()
+//            let destinationVC = segue.destination as! TripViewController
+//            destinationVC.trip = createTrip()
         }
     }
     
@@ -319,26 +285,42 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     // MARK: - Database Methods
     
-    func loadPlaces() {
-        placeArray = realm.objects(Place.self) // gets all places from database
-    }
-    
-    func createPlace() {
-        let place = Place()
-        place.airportCode = destAirportCode
-        place.name = destination
-        print("saving place!")
-        savePlace(place: place)
-    }
-    
-    func savePlace(place : Place) { // use filter to find if airport code exists in database already
-        do {
-            try realm.write {
-                realm.add(place)
+    func findPlace(location : String) -> String {
+        var airportCode = ""
+        
+        for place in placesArray {
+            if (place.name == location) {
+                airportCode = place.airportCode
             }
-        } catch {
-            print("Error saving place to Realm \(error)")
         }
+        
+        return airportCode
+    }
+    
+    func loadPlaces() {
+        let placesDB = Database.database().reference().child("places")
+        
+        placesDB.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as! NSDictionary
+
+            for place in value {
+                let data = place.value as! NSDictionary
+                let name = data["actualCityName"] as! String
+                let airportCode = data["airportCode"] as! String
+                let country = data["country"] as! String
+                
+                let place = Place()
+                place.name = name
+                place.airportCode = airportCode
+                place.country = country
+                
+                self.placesArray.append(place)
+            }
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
     }
     
     func createTrip() -> Trip {

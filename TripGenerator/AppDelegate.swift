@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import GooglePlaces
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,15 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+
         GMSPlacesClient.provideAPIKey("AIzaSyBBd2UH06e5_Ihk9RumEDKyhph4UhyP5ys")
         
-        print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        do {
-            _ = try Realm()
-        } catch {
-            print("Error initializing Realm \(error)")
-        }
+//        print(Realm.Configuration.defaultConfiguration.fileURL)
+//
+//        do {
+//            _ = try Realm()
+//        } catch {
+//            print("Error initializing Realm \(error)")
+//        }
         
         return true
     }
