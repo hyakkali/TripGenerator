@@ -9,7 +9,6 @@ target 'TripGenerator' do
   pod 'SwiftyJSON'
   pod 'Alamofire'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
-  pod 'RealmSwift'
   pod 'GooglePlaces'
   pod 'GoogleMaps'
   pod 'SwipeCellKit'
