@@ -59,6 +59,10 @@ class TripViewController : UIViewController, FaveButtonDelegate {
         
         createFaveButton()
         
+        if (isFavorite) {
+            isFavorite = false
+        }
+        
         if (tripType == "Round Trip") {
             tripDatesLabel.text = "\(departDate) - \(arrivalDate)"
         } else {

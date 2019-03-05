@@ -147,7 +147,6 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
                 print(error!)
             } else {
                 print("Trip deleted successfully")
-                
                 self.tableView.reloadData()
             }
         }
