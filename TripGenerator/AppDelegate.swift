@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 import GooglePlaces
 import Firebase
 
@@ -22,15 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
 
         GMSPlacesClient.provideAPIKey("AIzaSyBBd2UH06e5_Ihk9RumEDKyhph4UhyP5ys")
-        
-        
-//        print(Realm.Configuration.defaultConfiguration.fileURL)
-//
-//        do {
-//            _ = try Realm()
-//        } catch {
-//            print("Error initializing Realm \(error)")
-//        }
         
         return true
     }

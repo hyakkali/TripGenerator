@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
-import Alamofire
 import ChameleonFramework
 import Firebase
 
