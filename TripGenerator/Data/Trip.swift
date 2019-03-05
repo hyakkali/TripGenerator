@@ -9,8 +9,11 @@
 import Foundation
 
 class Trip {
+    var id : String = ""
     var origin : String = ""
     var destination : String = ""
+    var originCode : String = ""
+    var destinationCode : String = ""
     var departDate : String = ""
     var arrivalDate : String = ""
     var tripType : String = ""

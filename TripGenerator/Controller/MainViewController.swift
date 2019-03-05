@@ -21,7 +21,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     @IBOutlet weak var greetingLabel: UILabel!
     
-    let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
+//    let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
+    let originList = ["Raleigh", "Boston", "New York", "San Francisco"]
     let tripTypeList = ["Round Trip", "One Way"]
     
     let noPlaceIDDict : [String : String] = [
@@ -39,9 +40,10 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var kayak_url = ""
     var departDate = ""
     var arrivalDate = ""
-    var origin = "RDU"
+    var origin = "Raleigh"
     var destination = ""
-    var destAirportCode = ""
+    var originCode = ""
+    var destinationCode = ""
     var destPlaceID = ""
 
     override func viewDidLoad() {
@@ -111,12 +113,13 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let number : Int = Int.random(in: 0 ..< placesArray.count)
         destination = placesArray[number].name
 
-        while ((origin == "BOS" && destination == "Boston") || ((origin == "JFK" || origin == "EWR" || origin == "LGA") && destination == "New York") || (origin == "SFO" && destination == "San Francisco")) {
+        while (origin == destination) {
             let number : Int = Int.random(in: 0 ..< placesArray.count)
             destination = placesArray[number].name
         }
         
-        destAirportCode = findPlace(location: destination)
+        originCode = getAirportCode(location: origin)
+        destinationCode = getAirportCode(location: destination)
         self.getAttractions()
     
     }
@@ -158,8 +161,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "goToTripPage") {
-//            let destinationVC = segue.destination as! TripViewController
-//            destinationVC.trip = createTrip()
+            let destinationVC = segue.destination as! TripViewController
+            destinationVC.trip = createTrip()
         }
     }
     
@@ -235,7 +238,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let arrDay = arrivalDateArr[1]
         let arrYear = arrivalDateArr[2]
         
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:\(origin),to:\(destAirportCode),departure:\(departMonth)/\(departDay)/\(departYear)TANYT&leg2=from:\(destAirportCode),to:\(origin),departure:\(arrMonth)/\(arrDay)/\(arrYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:\(originCode),to:\(destinationCode),departure:\(departMonth)/\(departDay)/\(departYear)TANYT&leg2=from:\(destinationCode),to:\(originCode),departure:\(arrMonth)/\(arrDay)/\(arrYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
     }
     
     func generateOWExpediaURL() {
@@ -245,7 +248,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let departDay = departDateArr[1]
         let departYear = departDateArr[2]
         
-        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from:\(origin),to:\(destAirportCode),departure:\(departMonth)/\(departDay)/\(departYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
+        expedia_url = "https://www.expedia.com/Flights-Search?trip=oneway&leg1=from:\(originCode),to:\(destinationCode),departure:\(departMonth)/\(departDay)/\(departYear)TANYT&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search&origref=www.expedia.com"
     }
     
     func generateRTKayakURL() {
@@ -260,7 +263,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let arrDay = addHeaderZero(number: String(arrivalDateArr[1]))
         let arrYear = arrivalDateArr[2]
         
-        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destAirportCode)/\(departYear)-\(departMonth)-\(departDay)/\(arrYear)-\(arrMonth)-\(arrDay)/1adults?sort=bestflight_a"
+        kayak_url = "https://www.kayak.com/flights/\(originCode)-\(destinationCode)/\(departYear)-\(departMonth)-\(departDay)/\(arrYear)-\(arrMonth)-\(arrDay)/1adults?sort=bestflight_a"
     }
     
     func generateOWKayakURL() {
@@ -270,7 +273,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let departDay = addHeaderZero(number: String(departDateArr[1]))
         let departYear = departDateArr[2]
         
-        kayak_url = "https://www.kayak.com/flights/\(origin)-\(destAirportCode)/\(departYear)-\(departMonth)-\(departDay)/1adults?sort=bestflight_a"
+        kayak_url = "https://www.kayak.com/flights/\(originCode)-\(destinationCode)/\(departYear)-\(departMonth)-\(departDay)/1adults?sort=bestflight_a"
     }
     
     // MARK: - Helper Methods
@@ -285,8 +288,12 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     // MARK: - Database Methods
     
-    func findPlace(location : String) -> String {
+    func getAirportCode(location : String) -> String {
         var airportCode = ""
+        
+        if (location == "Raleigh") {
+            return "RDU"
+        }
         
         for place in placesArray {
             if (place.name == location) {
@@ -329,6 +336,8 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         trip.departDate = departDate.replacingOccurrences(of: " ", with: "/")
         trip.destination = destination
         trip.origin = origin
+        trip.destinationCode = destinationCode
+        trip.originCode = originCode
         trip.expediaURL = expedia_url
         trip.kayakURL = kayak_url
         trip.tripType = tripTypeTextField.text!
