@@ -91,42 +91,43 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
         let tripsDB = Database.database().reference().child("trips").child(userID!)
         
         tripsDB.observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as! NSDictionary
             
-            for trip in value {
-                let data = trip.value as! NSDictionary
+            if let value = snapshot.value as? NSDictionary {
+                for trip in value {
+                    let data = trip.value as! NSDictionary
+                    
+                    let id = data["id"] as! String
+                    let destination = data["destination"] as! String
+                    let origin = data["origin"] as! String
+                    let arrivalDate = data["arrivalDate"] as! String
+                    let departDate = data["departDate"] as! String
+                    let destinationCode = data["destinationCode"] as! String
+                    let originCode = data["originCode"] as! String
+                    let destinationCountry = data["destinationCountry"] as! String
+                    let destPlaceID = data["destPlaceID"] as! String
+                    let expediaURL = data["expediaURL"] as! String
+                    let kayakURL = data["kayakURL"] as! String
+                    let tripType = data["tripType"] as! String
+                    
+                    let trip = Trip()
+                    trip.id = id
+                    trip.destination = destination
+                    trip.origin = origin
+                    trip.arrivalDate = arrivalDate
+                    trip.departDate = departDate
+                    trip.destinationCode = destinationCode
+                    trip.originCode = originCode
+                    trip.tripType = tripType
+                    trip.destinationCountry = destinationCountry
+                    trip.destPlaceID = destPlaceID
+                    trip.expediaURL = expediaURL
+                    trip.kayakURL = kayakURL
+                    
+                    self.tripsArray.append(trip)
+                }
                 
-                let id = data["id"] as! String
-                let destination = data["destination"] as! String
-                let origin = data["origin"] as! String
-                let arrivalDate = data["arrivalDate"] as! String
-                let departDate = data["departDate"] as! String
-                let destinationCode = data["destinationCode"] as! String
-                let originCode = data["originCode"] as! String
-                let destinationCountry = data["destinationCountry"] as! String
-                let destPlaceID = data["destPlaceID"] as! String
-                let expediaURL = data["expediaURL"] as! String
-                let kayakURL = data["kayakURL"] as! String
-                let tripType = data["tripType"] as! String
-
-                let trip = Trip()
-                trip.id = id
-                trip.destination = destination
-                trip.origin = origin
-                trip.arrivalDate = arrivalDate
-                trip.departDate = departDate
-                trip.destinationCode = destinationCode
-                trip.originCode = originCode
-                trip.tripType = tripType
-                trip.destinationCountry = destinationCountry
-                trip.destPlaceID = destPlaceID
-                trip.expediaURL = expediaURL
-                trip.kayakURL = kayakURL
-                
-                self.tripsArray.append(trip)
+                self.tableView.reloadData()
             }
-            
-            self.tableView.reloadData()
             
         }) { (error) in
             print(error.localizedDescription)

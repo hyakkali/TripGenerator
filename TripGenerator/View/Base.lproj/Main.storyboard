@@ -312,7 +312,7 @@
             </objects>
             <point key="canvasLocation" x="832.79999999999995" y="-358.4707646176912"/>
         </scene>
-        <!--Favorited Trips-->
+        <!--Favorite Trips View Controller-->
         <scene sceneID="CtB-5s-9qY">
             <objects>
                 <tableViewController id="TpI-RI-xsl" customClass="FavoriteTripsViewController" customModule="TripGenerator" customModuleProvider="target" sceneMemberID="viewController">
@@ -336,7 +336,7 @@
                             <outlet property="delegate" destination="TpI-RI-xsl" id="Ez2-gO-Bjz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Favorited Trips" id="ZOa-8d-13p"/>
+                    <navigationItem key="navigationItem" id="ZOa-8d-13p"/>
                     <connections>
                         <segue destination="UhS-mX-KZj" kind="show" identifier="goToTripDetails" id="paA-K3-6b4"/>
                     </connections>

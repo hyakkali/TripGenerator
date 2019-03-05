@@ -117,6 +117,12 @@ class TripViewController : UIViewController, FaveButtonDelegate {
             })
     }
     
+    override func willMove(toParent parent: UIViewController?) {
+        if (parent == nil) {
+            print("going back!!")
+        }
+    }
+    
     // MARK: - FaveButton Delegate Methods
     
     func createFaveButton() {
