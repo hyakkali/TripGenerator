@@ -45,6 +45,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var originCode = ""
     var destinationCode = ""
     var destPlaceID = ""
+    var destinationCountry = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,14 +113,16 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         let number : Int = Int.random(in: 0 ..< placesArray.count)
         destination = placesArray[number].name
+        destinationCountry = placesArray[number].country
 
         while (origin == destination) {
             let number : Int = Int.random(in: 0 ..< placesArray.count)
             destination = placesArray[number].name
+            destinationCountry = placesArray[number].country
         }
         
         originCode = getAirportCode(location: origin)
-        destinationCode = getAirportCode(location: destination)
+        destinationCode = placesArray[number].airportCode
         self.getAttractions()
     
     }
@@ -129,10 +132,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
 
     func getAttractions() {
-        var url = PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY
-        if destination == "Barcelona" || destination == "Mecca" || destination == "Ho Chi Minh" {
-            url = PLACES_URL + formatCityName(city: noPlaceIDDict[destination]!) + KEY + PLACES_API_KEY
-        }
+        let url = PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY
         Alamofire.request(url , method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 print("got places data!")
@@ -342,6 +342,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         trip.kayakURL = kayak_url
         trip.tripType = tripTypeTextField.text!
         trip.destPlaceID = destPlaceID
+        trip.destinationCountry = destinationCountry
         return trip
     }
 

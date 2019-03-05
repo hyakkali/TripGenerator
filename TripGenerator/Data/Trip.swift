@@ -14,6 +14,7 @@ class Trip {
     var destination : String = ""
     var originCode : String = ""
     var destinationCode : String = ""
+    var destinationCountry : String = ""
     var departDate : String = ""
     var arrivalDate : String = ""
     var tripType : String = ""

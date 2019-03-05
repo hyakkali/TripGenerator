@@ -18,6 +18,7 @@ class TripViewController : UIViewController, FaveButtonDelegate {
     var origin : String = ""
     var originCode : String = ""
     var destinationCode : String = ""
+    var destinationCountry : String = ""
     var expediaURL : String = ""
     var kayakURL : String = ""
     var departDate : String = ""
@@ -35,6 +36,7 @@ class TripViewController : UIViewController, FaveButtonDelegate {
     var placesClient : GMSPlacesClient!
     
     @IBOutlet weak var destinationLabel: UILabel!
+    @IBOutlet weak var destinationCountryLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
     @IBOutlet weak var tripTypeLabel: UILabel!
     @IBOutlet weak var airportCodesLabel: UILabel!
@@ -48,6 +50,8 @@ class TripViewController : UIViewController, FaveButtonDelegate {
         super.viewDidLoad()
         
         destinationLabel.text = destination
+        
+        destinationCountryLabel.text = destinationCountry
         
         tripTypeLabel.text = tripType
         
@@ -167,6 +171,7 @@ class TripViewController : UIViewController, FaveButtonDelegate {
         expediaURL = trip!.expediaURL
         tripType = trip!.tripType
         destPlaceID = trip!.destPlaceID
+        destinationCountry = trip!.destinationCountry
     }
     
     // MARK: - Database Methods
