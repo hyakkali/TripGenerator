@@ -178,7 +178,8 @@ class TripViewController : UIViewController, FaveButtonDelegate {
     
     func saveTrip(trip : Trip) {
         
-        let tripsDB = Database.database().reference().child("trips")
+        let userID = Auth.auth().currentUser?.uid
+        let tripsDB = Database.database().reference().child("trips").child(userID!)
         let key = tripsDB.childByAutoId().key
 
         let tripDict = [
@@ -205,20 +206,6 @@ class TripViewController : UIViewController, FaveButtonDelegate {
             }
         }
         
-    }
-    
-    func deleteTrip(trip : Trip) {
-        
-        let tripsDB = Database.database().reference().child("trips")
-        
-        let currTripRef = tripsDB.child(trip.id)
-        currTripRef.removeValue { error, _ in
-            if (error != nil) {
-                print(error!)
-            } else {
-                print("Trip deleted successfully")
-            }
-        }
     }
     
 }

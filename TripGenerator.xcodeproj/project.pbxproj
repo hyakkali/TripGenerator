@@ -18,6 +18,8 @@
 		237F4F232204ADC1007307A9 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F4F222204ADC1007307A9 /* Place.swift */; };
 		23935962220F705B001B8E40 /* CustomTripCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23935961220F705B001B8E40 /* CustomTripCell.swift */; };
 		23935964220F7092001B8E40 /* TripCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23935963220F7092001B8E40 /* TripCell.xib */; };
+		23BB946B222E299C0051F2AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB946A222E299C0051F2AA /* LoginViewController.swift */; };
+		23BB946D222E29AC0051F2AA /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB946C222E29AC0051F2AA /* RegistrationViewController.swift */; };
 		23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC64CD2203636500207CB1 /* TripViewController.swift */; };
 		6AB66D2C8734377AD4D6B61B /* Pods_TripGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */; };
 /* End PBXBuildFile section */
@@ -36,6 +38,8 @@
 		237F4F222204ADC1007307A9 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		23935961220F705B001B8E40 /* CustomTripCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTripCell.swift; sourceTree = "<group>"; };
 		23935963220F7092001B8E40 /* TripCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TripCell.xib; sourceTree = "<group>"; };
+		23BB946A222E299C0051F2AA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		23BB946C222E29AC0051F2AA /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		23CC64CD2203636500207CB1 /* TripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
 		23EEBEFD0D0F53C61580E6E0 /* Pods_TripGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		770078469DB390612866E83C /* Pods-TripGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripGenerator.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripGenerator/Pods-TripGenerator.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 				233C151F2202864700AA4322 /* MainViewController.swift */,
 				23CC64CD2203636500207CB1 /* TripViewController.swift */,
 				23739E23220E195E00F0C991 /* FavoriteTripsViewController.swift */,
+				23BB946A222E299C0051F2AA /* LoginViewController.swift */,
+				23BB946C222E29AC0051F2AA /* RegistrationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -311,7 +317,9 @@
 				237F4F212204AD35007307A9 /* Trip.swift in Sources */,
 				23935962220F705B001B8E40 /* CustomTripCell.swift in Sources */,
 				23739E24220E195E00F0C991 /* FavoriteTripsViewController.swift in Sources */,
+				23BB946D222E29AC0051F2AA /* RegistrationViewController.swift in Sources */,
 				233C15202202864700AA4322 /* MainViewController.swift in Sources */,
+				23BB946B222E299C0051F2AA /* LoginViewController.swift in Sources */,
 				23CC64CE2203636500207CB1 /* TripViewController.swift in Sources */,
 				237F4F232204ADC1007307A9 /* Place.swift in Sources */,
 				233C151E2202864700AA4322 /* AppDelegate.swift in Sources */,
