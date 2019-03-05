@@ -118,8 +118,8 @@ class TripViewController : UIViewController, FaveButtonDelegate {
     }
     
     override func willMove(toParent parent: UIViewController?) {
-        if (parent == nil) {
-            print("going back!!")
+        if (parent == nil && isFavorite) {
+            saveTrip(trip: trip!)
         }
     }
     
