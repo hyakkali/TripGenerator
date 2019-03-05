@@ -114,35 +114,23 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         let number : Int = Int.random(in: 0 ..< placesArray.count)
         destination = placesArray[number].name
         destinationCountry = placesArray[number].country
+        destPlaceID = placesArray[number].placeID
 
         while (origin == destination) {
             let number : Int = Int.random(in: 0 ..< placesArray.count)
             destination = placesArray[number].name
             destinationCountry = placesArray[number].country
+            destPlaceID = placesArray[number].placeID
         }
         
         originCode = getAirportCode(location: origin)
         destinationCode = placesArray[number].airportCode
-        self.getAttractions()
+        self.generateTripDetails()
     
     }
     
     @IBAction func tripsButtonPressed(_ sender: Any) {
         self.performSegue(withIdentifier: "goToFavTrips", sender: self)
-    }
-
-    func getAttractions() {
-        let url = PLACES_URL + formatCityName(city: destination) + KEY + PLACES_API_KEY
-        Alamofire.request(url , method: .get).responseJSON { (response) in
-            if response.result.isSuccess {
-                print("got places data!")
-                let body : JSON = JSON(response.result.value!)
-                self.destPlaceID = body["results"][0]["place_id"].string!
-                self.generateTripDetails()
-            } else {
-                print("Error in places API \(response.result.error!)")
-            }
-        }
     }
     
     func generateTripDetails() {
@@ -315,11 +303,13 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                 let name = data["actualCityName"] as! String
                 let airportCode = data["airportCode"] as! String
                 let country = data["country"] as! String
+                let placeID = data["placeID"] as! String
                 
                 let place = Place()
                 place.name = name
                 place.airportCode = airportCode
                 place.country = country
+                place.placeID = placeID
                 
                 self.placesArray.append(place)
             }

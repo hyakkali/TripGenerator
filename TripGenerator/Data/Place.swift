@@ -12,4 +12,5 @@ class Place {
     var name : String = ""
     var airportCode : String = ""
     var country : String = ""
+    var placeID : String = ""
 }
