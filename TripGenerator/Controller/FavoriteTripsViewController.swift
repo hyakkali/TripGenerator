@@ -26,7 +26,7 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
         
         loadTrips()
     }
-
+    
     // MARK: - Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -36,12 +36,12 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
         
         let trip = tripsArray[indexPath.row]
         
-            cell.destinationLabel.text = "\(trip.destination), \(trip.destinationCountry)"
-            cell.airportCodesLabel.text = "\(trip.originCode) - \(trip.destinationCode))"
-            cell.tripTypeLabel.text = trip.tripType
-            
-            cell.tripDatesLabel.text = trip.tripType == "Round Trip" ? "\(trip.departDate) - \(trip.arrivalDate)" : trip.departDate
-
+        cell.destinationLabel.text = "\(trip.destination), \(trip.destinationCountry)"
+        cell.airportCodesLabel.text = "\(trip.originCode) - \(trip.destinationCode)"
+        cell.tripTypeLabel.text = trip.tripType
+        
+        cell.tripDatesLabel.text = trip.tripType == "Round Trip" ? "\(trip.departDate) - \(trip.arrivalDate)" : trip.departDate
+        
         return cell
     }
     
@@ -69,6 +69,7 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
         
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { (action, indexPath) in
             self.deleteTrip(trip: self.tripsArray[indexPath.row])
+            self.tripsArray.remove(at: indexPath.row)
         }
         
         deleteAction.image = UIImage(named: "delete-icon")
@@ -132,7 +133,7 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
         }) { (error) in
             print(error.localizedDescription)
         }
-
+        
     }
     
     func deleteTrip(trip : Trip) {
@@ -146,8 +147,10 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
                 print(error!)
             } else {
                 print("Trip deleted successfully")
+                
+                self.tableView.reloadData()
             }
         }
     }
-
+    
 }

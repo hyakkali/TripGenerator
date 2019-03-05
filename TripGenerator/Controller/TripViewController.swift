@@ -139,11 +139,8 @@ class TripViewController : UIViewController, FaveButtonDelegate {
     }
     
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
-        print(selected)
-        if selected {
-            faveButton.isUserInteractionEnabled = false
-            saveTrip(trip: trip!)
-        }
+        isFavorite = selected
+        print(isFavorite)
     }
     
     // MARK: - Buttons
@@ -194,6 +191,7 @@ class TripViewController : UIViewController, FaveButtonDelegate {
             "destination" : destination,
             "originCode" : originCode,
             "destinationCode" : destinationCode,
+            "destinationCountry" : destinationCountry,
             "departDate" : departDate,
             "arrivalDate" : arrivalDate,
             "tripType" : tripType,
