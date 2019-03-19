@@ -15,25 +15,13 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var placesArray = [Place]()
     
     @IBOutlet weak var originTextField: UITextField!
-    @IBOutlet weak var tripTypeTextField: UITextField!
     
     @IBOutlet weak var greetingLabel: UILabel!
     
-//    let originList = ["RDU", "BOS", "JFK", "LGA", "EWR", "SFO"]
+    @IBOutlet weak var tripTypeSegmentControl: UISegmentedControl!
+
     let originList = ["Raleigh", "Boston", "New York", "San Francisco"]
-    let tripTypeList = ["Round Trip", "One Way"]
     
-    let noPlaceIDDict : [String : String] = [
-        "Barcelona" : "Barcelona, Spain",
-        "Mecca" : "Mecca, Saudi Arabia",
-        "Ho Chi Minh" : "Ho Chi Minh City"
-    ]
-    
-    // URL to get valid airport code
-    let AIRPORT_URL = "https://iatacodes.org/api/v6/autocomplete?api_key=9e145a85-8a4f-4f41-aaf3-e807721840ff&query="
-    let PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
-    let KEY = "&key="
-    let PLACES_API_KEY = "AIzaSyB8AVDjX7tbuZqTyOQZuwKcur7MZM6QE0M"
     var expedia_url = ""
     var kayak_url = ""
     var departDate = ""
@@ -44,11 +32,14 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var destinationCode = ""
     var destPlaceID = ""
     var destinationCountry = ""
+    var tripType = "Round Trip"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = FlatWhite()
+        
+        originTextField.useUnderline()
         
         setupPickerViews()
         displayGreeting()
@@ -65,19 +56,12 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     func setupPickerViews() {
         let originPickerView = UIPickerView()
-        let tripTypePickerView = UIPickerView()
         
         originPickerView.delegate = self
-        tripTypePickerView.delegate = self
         
         originTextField.inputView = originPickerView
-        tripTypeTextField.inputView = tripTypePickerView
-        
-        originPickerView.tag = 1
-        tripTypePickerView.tag = 2
-        
+                
         originTextField.text = originList[0]
-        tripTypeTextField.text = tripTypeList[0]
     }
     
     // MARK: - PickerView Methods
@@ -87,25 +71,31 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { // number of rows
-        return pickerView.tag == 1 ? originList.count : tripTypeList.count
+        return originList.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? { // sets title for each row
-        return pickerView.tag == 1 ? originList[row] : tripTypeList[row]
+        return originList[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) { // set text of textfield to row value
-        if pickerView.tag == 1 {
-            originTextField.text = originList[row]
-            origin = originList[row]
-        } else {
-            tripTypeTextField.text = tripTypeList[row]
-        }
+
+        originTextField.text = originList[row]
+        origin = originList[row]
         
         self.view.endEditing(true)
     }
     
     // MARK: - Buttons
+    
+    @IBAction func tripTypeChanged(_ sender: Any) {
+        if (tripTypeSegmentControl.selectedSegmentIndex == 0) {
+            tripType = "Round Trip"
+        } else {
+            tripType = "One Way"
+        }
+    }
+    
     
     @IBAction func generateTrip(_ sender: Any) {
         
@@ -134,7 +124,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     func generateTripDetails() {
         self.generateRandomDates()
         
-        if (self.tripTypeTextField.text! == "Round Trip") {
+        if (self.tripType == "Round Trip") {
             self.generateRTExpediaURL()
             self.generateRTKayakURL()
         } else {
@@ -328,7 +318,7 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         trip.originCode = originCode
         trip.expediaURL = expedia_url
         trip.kayakURL = kayak_url
-        trip.tripType = tripTypeTextField.text!
+        trip.tripType = tripType
         trip.destPlaceID = destPlaceID
         trip.destinationCountry = destinationCountry
         return trip
@@ -336,3 +326,16 @@ class MainViewController: UIViewController, UIPickerViewDataSource, UIPickerView
 
 }
 
+extension UITextField {
+    
+    func useUnderline() {
+        
+        let border = CALayer()
+        let borderWidth = CGFloat(1.0)
+        border.borderColor = UIColor.black.cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - borderWidth, width: self.frame.size.width, height: self.frame.size.height)
+        border.borderWidth = borderWidth
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
+}
