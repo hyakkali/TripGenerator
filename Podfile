@@ -8,7 +8,7 @@ target 'TripGenerator' do
   # Pods for TripGenerator
   pod 'SwiftyJSON'
   pod 'Alamofire'
-  pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+  pod 'ChameleonFramework/Swift'
   pod 'GooglePlaces'
   pod 'GoogleMaps'
   pod 'SwipeCellKit'
@@ -16,5 +16,6 @@ target 'TripGenerator' do
   pod 'Firebase'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'SVProgressHUD'
 
 end

@@ -11,8 +11,9 @@ import SafariServices
 import GooglePlaces
 import FaveButton
 import Firebase
+import SVProgressHUD
 
-class TripViewController : UIViewController, FaveButtonDelegate {
+class TripViewController : UIViewController {
     
     var destination : String = ""
     var origin : String = ""
@@ -26,6 +27,8 @@ class TripViewController : UIViewController, FaveButtonDelegate {
     var tripType : String = ""
     var destPlaceID = ""
     var isFavorite = false
+    
+    let impact = UIImpactFeedbackGenerator()
     
     var trip : Trip? {
         didSet{
@@ -46,6 +49,8 @@ class TripViewController : UIViewController, FaveButtonDelegate {
     @IBOutlet weak var imageView3: UIImageView!
     @IBOutlet weak var imageView4: UIImageView!
     
+    @IBOutlet weak var favoriteButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,10 +62,17 @@ class TripViewController : UIViewController, FaveButtonDelegate {
         
         airportCodesLabel.text = "\(originCode) - \(destinationCode)"
         
-        createFaveButton()
+//        createFaveButton()
+        if (isFavorite) {
+            favoriteButton.setImage(UIImage(named: "filled_heart"), for: .normal)
+        }
+//        else {
+//            favoriteButton.setImage(UIImage(named: "empty_heart"), for: .normal)
+//        }
         
         if (isFavorite) {
             isFavorite = false
+            favoriteButton.isUserInteractionEnabled = false
         }
         
         if (tripType == "Round Trip") {
@@ -127,25 +139,45 @@ class TripViewController : UIViewController, FaveButtonDelegate {
         }
     }
     
+    @IBAction func favButtonPressed(_ sender: Any) {
+        print("should start here!")
+//        SVProgressHUD.show()
+        impact.impactOccurred()
+        isFavorite = !isFavorite
+        print(isFavorite)
+//        favoriteButton.isUserInteractionEnabled = false
+        
+        if (isFavorite) {
+            favoriteButton.setImage(UIImage(named: "filled_heart"), for: .normal)
+//            saveTrip(trip: trip!)
+//            favoriteButton.isUserInteractionEnabled = true
+//            SVProgressHUD.dismiss()
+        } else {
+            favoriteButton.setImage(UIImage(named: "empty_heart"), for: .normal)
+        }
+    }
+    
+    
     // MARK: - FaveButton Delegate Methods
     
-    func createFaveButton() {
-        let faveButton = FaveButton(
-            frame: CGRect(x: 300, y: 92, width: 30, height: 30),
-            faveIconNormal: UIImage(named: "heart")
-        )
-        
-        faveButton.delegate = self
-        view.addSubview(faveButton)
-        
-        faveButton.isSelected = isFavorite
-        faveButton.isUserInteractionEnabled = !isFavorite
-    }
-    
-    func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
-        isFavorite = selected
-        print(isFavorite)
-    }
+//    func createFaveButton() {
+//        let faveButton = FaveButton(
+//            frame: CGRect(x: 300, y: 92, width: 30, height: 30),
+//            faveIconNormal: UIImage(named: "heart")
+//        )
+//
+//        faveButton.delegate = self
+//        view.addSubview(faveButton)
+//
+//        faveButton.isSelected = isFavorite
+//        faveButton.isUserInteractionEnabled = !isFavorite
+//    }
+//
+//    func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
+//        SVProgressHUD.show()
+//        isFavorite = selected
+//        print(isFavorite)
+//    }
     
     // MARK: - Buttons
     
@@ -211,6 +243,7 @@ class TripViewController : UIViewController, FaveButtonDelegate {
                 print(error!)
             } else {
                 print("Trip saved successfully")
+//                SVProgressHUD.dismiss()
             }
         }
         
