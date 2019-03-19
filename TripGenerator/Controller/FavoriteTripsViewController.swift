@@ -88,8 +88,7 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
     
     func loadTrips() {
         
-        let userID = Auth.auth().currentUser?.uid
-        let tripsDB = Database.database().reference().child("trips").child(userID!)
+        let tripsDB = Database.database().reference().child("trips")
         
         tripsDB.observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -138,8 +137,7 @@ class FavoriteTripsViewController: UITableViewController, SwipeTableViewCellDele
     
     func deleteTrip(trip : Trip) {
         
-        let userID = Auth.auth().currentUser?.uid
-        let tripsDB = Database.database().reference().child("trips").child(userID!)
+        let tripsDB = Database.database().reference().child("trips")
         
         let currTripRef = tripsDB.child(trip.id)
         currTripRef.removeValue { error, _ in

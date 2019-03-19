@@ -9,9 +9,7 @@
 import UIKit
 import SafariServices
 import GooglePlaces
-import FaveButton
 import Firebase
-import SVProgressHUD
 
 class TripViewController : UIViewController {
     
@@ -62,15 +60,8 @@ class TripViewController : UIViewController {
         
         airportCodesLabel.text = "\(originCode) - \(destinationCode)"
         
-//        createFaveButton()
         if (isFavorite) {
             favoriteButton.setImage(UIImage(named: "filled_heart"), for: .normal)
-        }
-//        else {
-//            favoriteButton.setImage(UIImage(named: "empty_heart"), for: .normal)
-//        }
-        
-        if (isFavorite) {
             isFavorite = false
             favoriteButton.isUserInteractionEnabled = false
         }
@@ -139,47 +130,18 @@ class TripViewController : UIViewController {
         }
     }
     
+    // MARK: - Buttons
+    
     @IBAction func favButtonPressed(_ sender: Any) {
-        print("should start here!")
-//        SVProgressHUD.show()
         impact.impactOccurred()
         isFavorite = !isFavorite
-        print(isFavorite)
-//        favoriteButton.isUserInteractionEnabled = false
         
         if (isFavorite) {
             favoriteButton.setImage(UIImage(named: "filled_heart"), for: .normal)
-//            saveTrip(trip: trip!)
-//            favoriteButton.isUserInteractionEnabled = true
-//            SVProgressHUD.dismiss()
         } else {
             favoriteButton.setImage(UIImage(named: "empty_heart"), for: .normal)
         }
     }
-    
-    
-    // MARK: - FaveButton Delegate Methods
-    
-//    func createFaveButton() {
-//        let faveButton = FaveButton(
-//            frame: CGRect(x: 300, y: 92, width: 30, height: 30),
-//            faveIconNormal: UIImage(named: "heart")
-//        )
-//
-//        faveButton.delegate = self
-//        view.addSubview(faveButton)
-//
-//        faveButton.isSelected = isFavorite
-//        faveButton.isUserInteractionEnabled = !isFavorite
-//    }
-//
-//    func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
-//        SVProgressHUD.show()
-//        isFavorite = selected
-//        print(isFavorite)
-//    }
-    
-    // MARK: - Buttons
     
     @IBAction func expediaButtonPressed(_ sender: Any) {
         if let url = URL(string: expediaURL) {
@@ -217,8 +179,7 @@ class TripViewController : UIViewController {
     
     func saveTrip(trip : Trip) {
         
-        let userID = Auth.auth().currentUser?.uid
-        let tripsDB = Database.database().reference().child("trips").child(userID!)
+        let tripsDB = Database.database().reference().child("trips")
         let key = tripsDB.childByAutoId().key
 
         let tripDict = [
@@ -243,7 +204,6 @@ class TripViewController : UIViewController {
                 print(error!)
             } else {
                 print("Trip saved successfully")
-//                SVProgressHUD.dismiss()
             }
         }
         
